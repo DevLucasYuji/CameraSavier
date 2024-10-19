@@ -36,9 +36,10 @@ import kotlin.math.floor
 
 /**
  * Timer box with hour (00-23) and minute (00-59)
+ *
  * @param hour initial hour from timer, valid values (00-23)
  * @param minute initial
- * */
+ */
 @Composable
 fun TimerBox(
     modifier: Modifier = Modifier,
@@ -69,10 +70,7 @@ fun TimerBox(
         )
 
         LaunchedEffect(internalHour, internalMinute) {
-            onTimeChange(
-                internalHour.toInt(),
-                internalMinute.toInt(),
-            )
+            onTimeChange(internalHour.toInt(), internalMinute.toInt())
         }
     }
 }
@@ -85,7 +83,7 @@ fun TimerBox(
  * @param value the initial value from time unit, if value is not valid then start with 00
  * @param horizontalAlignment horizontal alignment from box
  * @param onTimeChange callback for time unit
- * */
+ */
 @Composable
 private fun TimerUnitBox(
     modifier: Modifier = Modifier,
@@ -99,11 +97,7 @@ private fun TimerUnitBox(
     var hapticInitialized by remember { mutableStateOf(false) }
     val quantityMiddle = remember(quantity) { floor(quantity.toDouble() / 2).toInt() }
 
-    LazyColumn(
-        modifier = modifier,
-        state = state,
-        horizontalAlignment = horizontalAlignment,
-    ) {
+    LazyColumn(modifier = modifier, state = state, horizontalAlignment = horizontalAlignment) {
         items(Int.MAX_VALUE) { listIndex ->
             val index = listIndex % timeUnit.numbers.size
             val number = timeUnit.numbers[index]
@@ -114,36 +108,34 @@ private fun TimerUnitBox(
                 derivedStateOf { state.firstVisibleItemIndex + (quantity - 1) }
             }
 
-            val alpha by remember(listIndex) {
-                derivedStateOf {
-                    when (listIndex) {
-                        state.firstVisibleItemIndex, endIndex -> 0.25F
-                        middle -> 1F
-                        in state.firstVisibleItemIndex until middle,
-                        in middle until endIndex,
-                        -> 0.5F
+            val alpha by
+                remember(listIndex) {
+                    derivedStateOf {
+                        when (listIndex) {
+                            state.firstVisibleItemIndex,
+                            endIndex -> 0.25F
+                            middle -> 1F
+                            in state.firstVisibleItemIndex until middle,
+                            in middle until endIndex -> 0.5F
 
-                        else -> 0F
+                            else -> 0F
+                        }
                     }
                 }
-            }
 
             val scaleMultiplier = remember(Unit) { 1.4F }
             val animatedScale by animateFloatAsState(targetValue = alpha * scaleMultiplier)
 
             AutoSizeText(
-                modifier = Modifier
-                    .alpha(alpha)
-                    .scale(
-                        animatedScale.coerceAtLeast(0.5F),
-                    ),
+                modifier = Modifier.alpha(alpha).scale(animatedScale.coerceAtLeast(0.5F)),
                 text = number,
-                textStyle = TextStyle(
-                    fontSize = 48.sp,
-                    textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.onBackground,
-                    fontWeight = FontWeight.Bold,
-                ),
+                textStyle =
+                    TextStyle(
+                        fontSize = 48.sp,
+                        textAlign = TextAlign.Center,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontWeight = FontWeight.Bold,
+                    ),
             )
 
             val haptic = LocalHapticFeedback.current
@@ -159,9 +151,8 @@ private fun TimerUnitBox(
         val half = Int.MAX_VALUE / 2 // Set Infinite loop
         val index = half % timeUnit.numbers.size
         val zeroIndex = half - index - quantityMiddle
-        val scrollToIndex = zeroIndex + timeUnit.numbers.indexOf(
-            value.toDecimalFormat(),
-        ).coerceAtLeast(0)
+        val scrollToIndex =
+            zeroIndex + timeUnit.numbers.indexOf(value.toDecimalFormat()).coerceAtLeast(0)
 
         state.scrollToItem(scrollToIndex)
     }

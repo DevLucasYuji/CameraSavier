@@ -6,15 +6,12 @@ import com.ujizin.leafy.domain.result.Result
 import com.ujizin.leafy.domain.result.asResult
 import kotlinx.coroutines.flow.Flow
 
-class LoadAlarmsUseCaseImpl(
-    private val repository: AlarmRepository,
-) : LoadAlarmsUseCase {
+class LoadAlarmsUseCaseImpl(private val repository: AlarmRepository) : LoadAlarmsUseCase {
 
-    override fun invoke(
-        plantId: Long,
-    ): Flow<Result<List<Alarm>>> = if (plantId != LoadAlarmsUseCase.INVALID_PLANT_ID) {
-        repository.getAlarms(plantId).asResult()
-    } else {
-        repository.getAllAlarms().asResult()
-    }
+    override fun invoke(plantId: Long): Flow<Result<List<Alarm>>> =
+        if (plantId != LoadAlarmsUseCase.INVALID_PLANT_ID) {
+            repository.getAlarms(plantId).asResult()
+        } else {
+            repository.getAllAlarms().asResult()
+        }
 }

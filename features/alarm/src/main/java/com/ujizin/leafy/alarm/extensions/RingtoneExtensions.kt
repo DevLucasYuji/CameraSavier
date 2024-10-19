@@ -5,10 +5,12 @@ import android.media.RingtoneManager
 import com.ujizin.leafy.core.ui.components.selector.ModalValue
 import com.ujizin.leafy.domain.model.Ringtone
 
-fun ModalValue<Ringtone>?.orDefault(context: Context) = this ?: run {
-    val default = getDefaultRingtone(context)
-    ModalValue(default.title, default)
-}
+fun ModalValue<Ringtone>?.orDefault(context: Context) =
+    this
+        ?: run {
+            val default = getDefaultRingtone(context)
+            ModalValue(default.title, default)
+        }
 
 fun getDefaultRingtone(context: Context): Ringtone {
     val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE)

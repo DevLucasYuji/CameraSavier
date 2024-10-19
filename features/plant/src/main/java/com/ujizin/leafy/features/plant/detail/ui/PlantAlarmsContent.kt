@@ -36,10 +36,7 @@ fun PlantAlarmsContent(
     alarms: List<Alarm>,
     onAlarmChanged: (Alarm) -> Unit,
 ) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
+    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         Text(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(R.string.alarms).capitalize(),
@@ -47,25 +44,21 @@ fun PlantAlarmsContent(
         )
         alarms.forEach { alarm ->
             PlantAlarmRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 16.dp),
+                modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp),
                 alarm = alarm,
-                onCheckedChange = { enabled ->
-                    onAlarmChanged(alarm.copy(enabled = enabled))
-                },
+                onCheckedChange = { enabled -> onAlarmChanged(alarm.copy(enabled = enabled)) },
             )
         }
-//        AnimatedButtonIcon( TODO add new alarm
-//            modifier = Modifier
-//                .padding(top = 16.dp)
-//                .size(64.dp)
-//                .clip(CircleShape)
-//                .background(MaterialTheme.colorScheme.secondaryContainer),
-//            icon = Icons.Add,
-//            size = 24.dp,
-//            onClick = {}
-//        )
+        //        AnimatedButtonIcon( TODO add new alarm
+        //            modifier = Modifier
+        //                .padding(top = 16.dp)
+        //                .size(64.dp)
+        //                .clip(CircleShape)
+        //                .background(MaterialTheme.colorScheme.secondaryContainer),
+        //            icon = Icons.Add,
+        //            size = 24.dp,
+        //            onClick = {}
+        //        )
     }
 }
 
@@ -83,15 +76,10 @@ private fun PlantAlarmRow(
     ) {
         val context = LocalContext.current
         var checked by remember(alarm.enabled) { mutableStateOf(alarm.enabled) }
-        val alphaRow by animateFloatAsState(
-            targetValue = if (checked) 1F else 0.5F,
-            label = "PlantAlarmRow",
-        )
+        val alphaRow by
+            animateFloatAsState(targetValue = if (checked) 1F else 0.5F, label = "PlantAlarmRow")
         Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(24.dp)
-                .alpha(alphaRow),
+            modifier = Modifier.fillMaxSize().padding(24.dp).alpha(alphaRow),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
         ) {
@@ -107,10 +95,13 @@ private fun PlantAlarmRow(
                     color = MaterialTheme.colorScheme.onSecondaryContainer,
                 )
             }
-            Switch(checked = checked, onCheckedChange = { enabled ->
-                checked = enabled
-                onCheckedChange(enabled)
-            })
+            Switch(
+                checked = checked,
+                onCheckedChange = { enabled ->
+                    checked = enabled
+                    onCheckedChange(enabled)
+                },
+            )
         }
     }
 }

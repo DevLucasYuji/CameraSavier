@@ -6,29 +6,21 @@ import kotlinx.serialization.Serializable
 
 sealed interface Destination {
 
-    @Serializable
-    data object Home : Destination
+    @Serializable data object Home : Destination
 
-    @Serializable
-    data class Search(val autoFocus: Boolean = false) : Destination
+    @Serializable data class Search(val autoFocus: Boolean = false) : Destination
 
-    @Serializable
-    data object Camera : Destination
+    @Serializable data object Camera : Destination
 
-    @Serializable
-    data object Tasks : Destination
+    @Serializable data object Tasks : Destination
 
-    @Serializable
-    data object Preferences : Destination
+    @Serializable data object Preferences : Destination
 
-    @Serializable
-    data object Publish : Destination
+    @Serializable data object Publish : Destination
 
-    @Serializable
-    data object Alarm : Destination
+    @Serializable data object Alarm : Destination
 
-    @Serializable
-    data object About : Destination
+    @Serializable data object About : Destination
 
     @Serializable
     data class PlantDetails(val plantId: Long) : Destination {
@@ -39,8 +31,7 @@ sealed interface Destination {
         }
     }
 
-    @Serializable
-    data class PlantEdit(val plantId: Long) : Destination
+    @Serializable data class PlantEdit(val plantId: Long) : Destination
 
     companion object {
         const val BASE_PATH = "app://leafy"

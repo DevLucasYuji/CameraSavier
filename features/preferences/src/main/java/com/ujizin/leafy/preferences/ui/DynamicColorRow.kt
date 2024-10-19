@@ -28,9 +28,6 @@ fun DynamicColorRow(
             style = MaterialTheme.typography.titleSmall,
         )
 
-        Switch(
-            checked = dynamicColor,
-            onCheckedChange = onDynamicColorChanged,
-        )
+        Switch(checked = dynamicColor, onCheckedChange = onDynamicColorChanged)
     }
 }

@@ -14,6 +14,7 @@ import com.ujizin.leafy.domain.usecase.alarm.update.UpdateAlarmUseCase
 import com.ujizin.leafy.domain.usecase.plant.delete.DeletePlantUseCase
 import com.ujizin.leafy.domain.usecase.plant.load.LoadPlantUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.flatMapConcat
@@ -21,10 +22,11 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.stateIn
-import javax.inject.Inject
 
 @HiltViewModel
-class DetailPlantViewModel @Inject constructor(
+class DetailPlantViewModel
+@Inject
+constructor(
     savedStateHandle: SavedStateHandle,
     loadPlant: LoadPlantUseCase,
     loadAlarms: LoadAlarmsUseCase,
@@ -36,19 +38,19 @@ class DetailPlantViewModel @Inject constructor(
     private val arguments = savedStateHandle.toRoute<Destination.PlantDetails>()
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val uiState = loadPlant(arguments.plantId)
-        .mapResult()
-        .flatMapConcat { plant ->
-            loadAlarms(plant.id)
-                .mapResult()
-                .map { alarms ->
+    val uiState =
+        loadPlant(arguments.plantId)
+            .mapResult()
+            .flatMapConcat { plant ->
+                loadAlarms(plant.id).mapResult().map { alarms ->
                     DetailPlantUiState.Loaded(plant, alarms)
                 }
-        }.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = DetailPlantUiState.Initial,
-        )
+            }
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = DetailPlantUiState.Initial,
+            )
 
     fun updateAlarm(alarm: Alarm) {
         updateAlarmUseCase(alarm).launchIn(viewModelScope)
@@ -67,10 +69,7 @@ sealed interface DetailPlantUiState {
 
     data object Initial : DetailPlantUiState
 
-    data class Loaded(
-        val plant: Plant,
-        val alarms: List<Alarm>,
-    ) : DetailPlantUiState
+    data class Loaded(val plant: Plant, val alarms: List<Alarm>) : DetailPlantUiState
 
     data object NotFound : DetailPlantUiState
 }

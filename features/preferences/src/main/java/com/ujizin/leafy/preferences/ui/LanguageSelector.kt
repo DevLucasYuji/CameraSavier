@@ -31,22 +31,18 @@ fun LanguageSelector(
         subTitle = stringResource(language.displayResId),
     ) {
         val context = LocalContext.current
-        val languages = remember(language) {
-            getLanguages(context).map {
-                ModalValue(it.displayName, it.language)
+        val languages =
+            remember(language) {
+                getLanguages(context).map { ModalValue(it.displayName, it.language) }
             }
-        }
-        val currentLanguage = remember(language) {
-            ModalValue(context.getString(language.displayResId), language)
-        }
+        val currentLanguage =
+            remember(language) { ModalValue(context.getString(language.displayResId), language) }
 
         ModalSelector(
             title = stringResource(R.string.language),
             currentValue = currentLanguage,
             values = languages,
-            onValueChanged = { language ->
-                onLanguageChanged(language.value)
-            },
+            onValueChanged = { language -> onLanguageChanged(language.value) },
         )
     }
 }

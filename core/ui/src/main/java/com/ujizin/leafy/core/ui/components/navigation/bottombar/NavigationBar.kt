@@ -18,25 +18,22 @@ import com.ujizin.leafy.core.ui.components.navigation.currentNavItemAsState
 import com.ujizin.leafy.core.ui.state.keyboardAsState
 
 @Composable
-internal fun NavigationBar(
-    navController: NavController,
-) {
+internal fun NavigationBar(navController: NavController) {
     val navItem by navController.currentNavItemAsState<BottomNavItem>(BottomNavItem.Home)
     val isKeyboardOpen by keyboardAsState()
-    val isBottomNavItem = remember(navItem) {
-        BottomNavItem.entries.any { bottomNavItem ->
-            bottomNavItem.destination != Destination.Camera &&
-                bottomNavItem.destination == navItem?.destination
+    val isBottomNavItem =
+        remember(navItem) {
+            BottomNavItem.entries.any { bottomNavItem ->
+                bottomNavItem.destination != Destination.Camera &&
+                    bottomNavItem.destination == navItem?.destination
+            }
         }
-    }
 
     BottomNavigationBar(
         bottomNavItem = navItem,
         showBottomNavigation = isBottomNavItem && !isKeyboardOpen,
         bottomNavItems = remember { BottomNavItem.entries.toList() },
-        onNavItemClicked = { destination ->
-            navController.navigateToItem(destination)
-        },
+        onNavItemClicked = { destination -> navController.navigateToItem(destination) },
     )
 }
 
@@ -51,23 +48,19 @@ private fun BottomNavigationBar(
     Box(modifier = modifier) {
         Animated(
             visibleTarget = showBottomNavigation,
-            animation = Animation.SlideToTop.copy(
-                durationMillis = Animation.SMALL_DURATION,
-            ),
+            animation = Animation.SlideToTop.copy(durationMillis = Animation.SMALL_DURATION),
         ) {
             androidx.compose.material3.NavigationBar {
                 bottomNavItems.forEach { item ->
-                    NavBarItem(selectedItem = bottomNavItem, item = item, onClick = {
-                        onNavItemClicked(item)
-                    })
+                    NavBarItem(
+                        selectedItem = bottomNavItem,
+                        item = item,
+                        onClick = { onNavItemClicked(item) },
+                    )
                 }
             }
 
-            CameraButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .offset(y = (-32).dp),
-            ) {
+            CameraButton(modifier = Modifier.fillMaxWidth().offset(y = (-32).dp)) {
                 onNavItemClicked(BottomNavItem.Camera)
             }
         }
@@ -76,11 +69,7 @@ private fun BottomNavigationBar(
 
 fun NavController.navigateToItem(item: NavItem) {
     navigate(item.destination) {
-        graph.startDestinationRoute?.let { route ->
-            popUpTo(route) {
-                saveState = true
-            }
-        }
+        graph.startDestinationRoute?.let { route -> popUpTo(route) { saveState = true } }
         launchSingleTop = true
         restoreState = true
     }

@@ -10,13 +10,10 @@ import com.ujizin.leafy.core.ui.extensions.Content
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun AppPermission(
-    content: @Composable Content,
-) {
+fun AppPermission(content: @Composable Content) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        val permissionState = rememberPermissionState(
-            permission = android.Manifest.permission.POST_NOTIFICATIONS,
-        )
+        val permissionState =
+            rememberPermissionState(permission = android.Manifest.permission.POST_NOTIFICATIONS)
 
         LaunchedEffect(permissionState.status) {
             if (permissionState.status is PermissionStatus.Denied) {

@@ -3,8 +3,8 @@ package com.ujizin.leafy.core.ui.annotation
 import androidx.compose.ui.tooling.preview.Preview
 
 /**
- * Multi preview annotation that represents various device sizes. Add this annotation to a composable
- * to render various devices.
+ * Multi preview annotation that represents various device sizes. Add this annotation to a
+ * composable to render various devices.
  */
 @Preview(name = "phone", device = "spec:shape=Normal,width=360,height=640,unit=dp,dpi=480")
 @Preview(name = "landscape", device = "spec:shape=Normal,width=640,height=360,unit=dp,dpi=480")

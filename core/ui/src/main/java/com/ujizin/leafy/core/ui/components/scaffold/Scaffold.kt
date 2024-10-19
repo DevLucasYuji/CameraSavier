@@ -20,9 +20,7 @@ fun Scaffold(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Column(modifier, content = content)
-    Box(modifier = Modifier.padding(24.dp)) {
-        topBar()
-    }
+    Box(modifier = Modifier.padding(24.dp)) { topBar() }
 }
 
 @Composable
@@ -30,13 +28,8 @@ fun TopAppBar(
     onNavigationContent: @Composable Content,
     onActionContent: @Composable RowScope.() -> Unit = {},
 ) {
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-    ) {
+    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         onNavigationContent()
-        Row {
-            onActionContent()
-        }
+        Row { onActionContent() }
     }
 }

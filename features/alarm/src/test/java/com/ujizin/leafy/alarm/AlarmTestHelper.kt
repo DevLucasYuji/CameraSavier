@@ -13,8 +13,7 @@ object AlarmTestHelper {
         enabled: Boolean = true,
         hours: Int = Random.nextInt(23),
         minutes: Int = Random.nextInt(59),
-        weekDays: List<WeekDay> = (0..6).shuffled().take(Random.nextInt(1, 6)).map {
-            WeekDay.entries[it]
-        },
+        weekDays: List<WeekDay> =
+            (0..6).shuffled().take(Random.nextInt(1, 6)).map { WeekDay.entries[it] },
     ) = Alarm(id, plantId, ringtoneContent, hours, enabled, minutes, weekDays)
 }

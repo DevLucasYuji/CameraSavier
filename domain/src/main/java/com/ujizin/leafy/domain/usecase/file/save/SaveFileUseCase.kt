@@ -11,10 +11,6 @@ interface SaveFileUseCase {
      * @param parentFile the parent file where's to be saved.
      * @param bitmap the bitmap to be saved.
      * @param extension extension from file.
-     * */
-    operator fun invoke(
-        parentFile: File,
-        bitmap: Bitmap,
-        extension: String,
-    ): File
+     */
+    operator fun invoke(parentFile: File, bitmap: Bitmap, extension: String): File
 }

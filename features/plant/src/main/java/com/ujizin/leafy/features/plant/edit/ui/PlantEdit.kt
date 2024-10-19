@@ -10,23 +10,12 @@ import com.ujizin.leafy.features.plant.edit.PlantEditUiState
 import com.ujizin.leafy.features.plant.edit.PlantEditViewModel
 
 @Composable
-fun PlantEditRoute(
-    onBackPressed: OnClick,
-    viewModel: PlantEditViewModel = hiltViewModel(),
-) {
+fun PlantEditRoute(onBackPressed: OnClick, viewModel: PlantEditViewModel = hiltViewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(viewModel) { viewModel.loadEditPlant() }
 
-    PlantEdit(
-        uiState = uiState,
-        onBackPressed = onBackPressed,
-    )
+    PlantEdit(uiState = uiState, onBackPressed = onBackPressed)
 }
 
-@Composable
-private fun PlantEdit(
-    uiState: PlantEditUiState,
-    onBackPressed: OnClick,
-) {
-}
+@Composable private fun PlantEdit(uiState: PlantEditUiState, onBackPressed: OnClick) {}

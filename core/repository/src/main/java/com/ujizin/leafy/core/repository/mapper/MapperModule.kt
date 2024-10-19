@@ -10,15 +10,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 internal object MapperModule {
 
-    @Provides
-    @Singleton
-    fun providePlantMapper() = PlantMapper()
+    @Provides @Singleton fun providePlantMapper() = PlantMapper()
 
-    @Provides
-    @Singleton
-    fun provideAlarmMapper() = AlarmMapper()
+    @Provides @Singleton fun provideAlarmMapper() = AlarmMapper()
 
-    @Provides
-    @Singleton
-    fun provideUserMapper() = UserMapper()
+    @Provides @Singleton fun provideUserMapper() = UserMapper()
 }

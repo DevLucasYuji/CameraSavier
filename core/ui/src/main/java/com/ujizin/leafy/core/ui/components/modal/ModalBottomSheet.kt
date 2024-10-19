@@ -20,14 +20,11 @@ fun ModalBottomSheet(
     content: @Composable ColumnScope.() -> Unit,
 ) {
     var isAnimating by remember(Unit) { mutableStateOf(showModal) }
-    val modalState = rememberModalBottomSheetState(
-        skipPartiallyExpanded = skipPartiallyExpanded,
-    )
+    val modalState = rememberModalBottomSheetState(skipPartiallyExpanded = skipPartiallyExpanded)
 
     LaunchedEffect(showModal) {
-        launch {
-            if (showModal) modalState.show() else modalState.hide()
-        }.invokeOnCompletion { isAnimating = showModal }
+        launch { if (showModal) modalState.show() else modalState.hide() }
+            .invokeOnCompletion { isAnimating = showModal }
     }
 
     if (showModal || isAnimating) {

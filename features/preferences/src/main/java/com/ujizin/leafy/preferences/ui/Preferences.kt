@@ -28,13 +28,8 @@ import com.ujizin.leafy.preferences.PreferencesViewModel
 import com.ujizin.leafy.preferences.utils.rememberGoogleReview
 
 @Composable
-internal fun PreferencesRoute(
-    viewModel: PreferencesViewModel = hiltViewModel(),
-) {
-    Section(
-        modifier = Modifier.fillMaxSize(),
-        title = stringResource(R.string.preferences_title),
-    ) {
+internal fun PreferencesRoute(viewModel: PreferencesViewModel = hiltViewModel()) {
+    Section(modifier = Modifier.fillMaxSize(), title = stringResource(R.string.preferences_title)) {
         val user = LocalUser.current
 
         Spacer(Modifier.height(16.dp))
@@ -64,46 +59,32 @@ internal fun PreferencesContent(
         val googleReviewState = rememberGoogleReview()
         val context = LocalContext.current
         UserSelector(
-            modifier = Modifier
-                .fillMaxWidth()
-                .paddingScreen(vertical = 16.dp),
+            modifier = Modifier.fillMaxWidth().paddingScreen(vertical = 16.dp),
             nickname = user.nickname,
             onNicknameChanged = onNicknameChanged,
         )
         LanguageSelector(
-            modifier = Modifier
-                .fillMaxWidth()
-                .paddingScreen(vertical = 16.dp),
+            modifier = Modifier.fillMaxWidth().paddingScreen(vertical = 16.dp),
             language = user.settings.language,
             onLanguageChanged = onLanguageChanged,
         )
         ThemeSelector(
-            modifier = Modifier
-                .fillMaxWidth()
-                .paddingScreen(vertical = 16.dp),
+            modifier = Modifier.fillMaxWidth().paddingScreen(vertical = 16.dp),
             theme = user.settings.theme,
             onThemeChanged = onThemeChanged,
         )
 
         ButtonRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .paddingScreen(vertical = 16.dp),
+            modifier = Modifier.fillMaxWidth().paddingScreen(vertical = 16.dp),
             title = stringResource(R.string.rate_app),
             subTitle = context.versionName?.let { stringResource(R.string.version, it) },
             onClick = { googleReviewState.launch(context) },
         )
 
         if (isDynamicColorAvailable) {
-            HorizontalDivider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .paddingScreen(vertical = 16.dp),
-            )
+            HorizontalDivider(modifier = Modifier.fillMaxWidth().paddingScreen(vertical = 16.dp))
             DynamicColorRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .paddingScreen(),
+                modifier = Modifier.fillMaxWidth().paddingScreen(),
                 dynamicColor = user.settings.dynamicColor,
                 onDynamicColorChanged = onDynamicColorChanged,
             )

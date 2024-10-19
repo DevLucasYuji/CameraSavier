@@ -1,19 +1,5 @@
-plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-}
+plugins { id("com.ujizin.android-feature") }
 
-apply(from = "$rootDir/config-compose.gradle")
-apply(from = "$rootDir/config-android.gradle")
+android { namespace = "com.ujizin.leafy.features.preferences" }
 
-android {
-    namespace = "com.ujizin.leafy.features.preferences"
-}
-
-dependencies {
-    implementation(projects.core.navigation)
-    implementation(projects.core.ui)
-    implementation(projects.domain)
-
-    implementation(libs.google.review)
-}
+dependencies { implementation(libs.google.review) }

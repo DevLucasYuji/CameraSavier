@@ -41,44 +41,26 @@ fun CameraFooter(
     onGalleryClick: OnClick,
     onSwitchClick: OnClick,
 ) {
-    Box(
-        modifier = Modifier
-            .noClickable()
-            .then(modifier),
-    ) {
-        ButtonGallery(
-            modifier = Modifier.align(Alignment.CenterStart),
-            onClick = onGalleryClick,
-        )
-        ButtonPicture(
-            modifier = Modifier.align(Alignment.Center),
-            onClick = onTakePicture,
-        )
-        ButtonSwitchCamera(
-            modifier = Modifier.align(Alignment.CenterEnd),
-            onClick = onSwitchClick,
-        )
+    Box(modifier = Modifier.noClickable().then(modifier)) {
+        ButtonGallery(modifier = Modifier.align(Alignment.CenterStart), onClick = onGalleryClick)
+        ButtonPicture(modifier = Modifier.align(Alignment.Center), onClick = onTakePicture)
+        ButtonSwitchCamera(modifier = Modifier.align(Alignment.CenterEnd), onClick = onSwitchClick)
     }
 }
 
 @Composable
-fun ButtonSwitchCamera(
-    modifier: Modifier = Modifier,
-    onClick: OnClick,
-) {
+fun ButtonSwitchCamera(modifier: Modifier = Modifier, onClick: OnClick) {
     var rotate by remember { mutableStateOf(false) }
-    val rotateAnimation by animateFloatAsState(
-        targetValue = if (rotate) 0F else 180F,
-        label = "camera-button-switch",
-    )
+    val rotateAnimation by
+        animateFloatAsState(targetValue = if (rotate) 0F else 180F, label = "camera-button-switch")
     ButtonPulse(
-        modifier = Modifier
-            .background(
-                MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5F),
-                CircleShape,
-            )
-            .padding(12.dp)
-            .then(modifier),
+        modifier =
+            Modifier.background(
+                    MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5F),
+                    CircleShape,
+                )
+                .padding(12.dp)
+                .then(modifier),
         shape = CircleShape,
         onClick = {
             rotate = !rotate
@@ -86,10 +68,7 @@ fun ButtonSwitchCamera(
         },
     ) {
         AnimatedIcon(
-            modifier = Modifier
-                .size(24.dp)
-                .align(Alignment.Center)
-                .rotate(rotateAnimation),
+            modifier = Modifier.size(24.dp).align(Alignment.Center).rotate(rotateAnimation),
             icon = Icons.Refresh,
             tint = Color.White,
         )
@@ -97,25 +76,20 @@ fun ButtonSwitchCamera(
 }
 
 @Composable
-fun ButtonGallery(
-    modifier: Modifier = Modifier,
-    onClick: OnClick,
-) {
+fun ButtonGallery(modifier: Modifier = Modifier, onClick: OnClick) {
     ButtonPulse(
-        modifier = Modifier
-            .background(
-                MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5F),
-                CircleShape,
-            )
-            .padding(12.dp)
-            .then(modifier),
+        modifier =
+            Modifier.background(
+                    MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.5F),
+                    CircleShape,
+                )
+                .padding(12.dp)
+                .then(modifier),
         shape = CircleShape,
         onClick = onClick,
     ) {
         AnimatedIcon(
-            modifier = Modifier
-                .size(24.dp)
-                .align(Alignment.Center),
+            modifier = Modifier.size(24.dp).align(Alignment.Center),
             icon = Icons.Gallery,
             tint = Color.White,
         )
@@ -123,13 +97,9 @@ fun ButtonGallery(
 }
 
 @Composable
-private fun ButtonPicture(
-    modifier: Modifier = Modifier,
-    onClick: OnClick,
-) {
+private fun ButtonPicture(modifier: Modifier = Modifier, onClick: OnClick) {
     ButtonPulse(
-        Modifier
-            .size(72.dp)
+        Modifier.size(72.dp)
             .background(MaterialTheme.colorScheme.primary, CircleShape)
             .border(BorderStroke(8.dp, Color.White), CircleShape)
             .then(modifier),
@@ -148,23 +118,24 @@ fun ButtonPulse(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val buttonPressed by interactionSource.collectIsPressedAsState()
-    val scaleAnimated by animateFloatAsState(
-        targetValue = if (buttonPressed) 1.10F else 1F,
-        label = "button-pulse-scale",
-    )
+    val scaleAnimated by
+        animateFloatAsState(
+            targetValue = if (buttonPressed) 1.10F else 1F,
+            label = "button-pulse-scale",
+        )
 
     LaunchedEffect(buttonPressed) { onPressChange(buttonPressed) }
 
     Box(
-        modifier = Modifier
-            .clip(shape)
-            .clickable(
-                interactionSource = interactionSource,
-                indication = ripple(bounded = true),
-                onClick = onClick,
-            )
-            .scale(scaleAnimated)
-            .then(modifier),
+        modifier =
+            Modifier.clip(shape)
+                .clickable(
+                    interactionSource = interactionSource,
+                    indication = ripple(bounded = true),
+                    onClick = onClick,
+                )
+                .scale(scaleAnimated)
+                .then(modifier),
         content = content,
     )
 }

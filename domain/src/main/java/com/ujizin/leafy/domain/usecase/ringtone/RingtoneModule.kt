@@ -15,7 +15,6 @@ object RingtoneModule {
 
     @Provides
     @Singleton
-    fun provideLoadRingtones(
-        repository: RingtoneRepository,
-    ): LoadRingtonesUseCase = LoadRingtonesUseCaseImpl(repository)
+    fun provideLoadRingtones(repository: RingtoneRepository): LoadRingtonesUseCase =
+        LoadRingtonesUseCaseImpl(repository)
 }

@@ -29,13 +29,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ujizin.leafy.core.components.R as CR
 import com.ujizin.leafy.core.ui.components.animated.AnimatedButtonIcon
 import com.ujizin.leafy.core.ui.components.button.Button
 import com.ujizin.leafy.core.ui.components.image.Icons
 import com.ujizin.leafy.core.ui.extensions.OnClick
 import com.ujizin.leafy.core.ui.extensions.capitalize
 import com.ujizin.leafy.features.about.R
-import com.ujizin.leafy.core.components.R as CR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,10 +65,7 @@ fun AboutRoute(onBackPressed: OnClick) {
         },
     ) {
         AboutContent(
-            modifier = Modifier
-                .padding(it)
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
+            modifier = Modifier.padding(it).fillMaxSize().verticalScroll(rememberScrollState())
         )
     }
 }
@@ -78,9 +75,8 @@ private fun AboutContent(modifier: Modifier = Modifier) {
     Column(modifier) {
         val context = LocalContext.current
         Image(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.onSecondaryContainer)
-                .aspectRatio(2F),
+            modifier =
+                Modifier.background(MaterialTheme.colorScheme.onSecondaryContainer).aspectRatio(2F),
             contentScale = ContentScale.Fit,
             painter = painterResource(id = CR.drawable.ic_launcher_foreground),
             contentDescription = null,
@@ -90,9 +86,7 @@ private fun AboutContent(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.weight(1F))
         Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp),
+            modifier = Modifier.fillMaxWidth().padding(20.dp),
             text = stringResource(id = R.string.about_button),
             onClick = context::openProject,
         )
@@ -115,8 +109,7 @@ private fun AboutSection(modifier: Modifier = Modifier) {
 }
 
 private fun Context.openProject() {
-    val intent = Intent(Intent.ACTION_VIEW).apply {
-        data = Uri.parse(getString(R.string.about_project_url))
-    }
+    val intent =
+        Intent(Intent.ACTION_VIEW).apply { data = Uri.parse(getString(R.string.about_project_url)) }
     startActivity(intent)
 }

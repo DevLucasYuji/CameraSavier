@@ -7,8 +7,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.serialization.json.Json
 import javax.inject.Singleton
+import kotlinx.serialization.json.Json
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -16,10 +16,6 @@ object DataStoreModule {
 
     @Provides
     @Singleton
-    fun provideUserDataStore(
-        @ApplicationContext context: Context,
-    ): UserDataStore = UserDataStoreImpl(
-        context = context,
-        serializer = Json,
-    )
+    fun provideUserDataStore(@ApplicationContext context: Context): UserDataStore =
+        UserDataStoreImpl(context = context, serializer = Json)
 }

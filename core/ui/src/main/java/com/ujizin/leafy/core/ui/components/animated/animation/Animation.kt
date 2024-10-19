@@ -1,6 +1,7 @@
 package com.ujizin.leafy.core.ui.components.animated.animation
 
-data class Animation internal constructor(
+data class Animation
+internal constructor(
     val direction: Animate.Direction,
     val delayMillis: Int = 0,
     val durationMillis: Int = MEDIUM_DURATION,

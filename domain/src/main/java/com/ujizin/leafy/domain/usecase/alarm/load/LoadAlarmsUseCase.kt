@@ -4,16 +4,14 @@ import com.ujizin.leafy.domain.model.Alarm
 import com.ujizin.leafy.domain.result.Result
 import kotlinx.coroutines.flow.Flow
 
-/**
- * Load alarms use case.
- * */
+/** Load alarms use case. */
 interface LoadAlarmsUseCase {
 
     /**
      * Load alarms.
      *
      * @param plantId the plant's id
-     * */
+     */
     operator fun invoke(plantId: Long = INVALID_PLANT_ID): Flow<Result<List<Alarm>>>
 
     companion object {

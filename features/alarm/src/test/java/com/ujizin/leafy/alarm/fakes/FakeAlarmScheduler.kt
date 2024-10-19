@@ -16,7 +16,8 @@ class FakeAlarmScheduler : AlarmScheduler {
     )
 
     private val _alarms = mutableListOf<FakeAlarm>()
-    val alarms get() = _alarms.toList()
+    val alarms
+        get() = _alarms.toList()
 
     override fun scheduleAlarm(
         type: Int,
@@ -27,15 +28,16 @@ class FakeAlarmScheduler : AlarmScheduler {
         requestCode: Int,
         bundle: Bundle,
     ) {
-        _alarms += FakeAlarm(
-            id = requestCode,
-            dayOfWeek = dayOfWeek,
-            type = type,
-            hours = hours,
-            minutes = minutes,
-            ringtoneUri = ringtoneUri,
-            bundle = bundle,
-        )
+        _alarms +=
+            FakeAlarm(
+                id = requestCode,
+                dayOfWeek = dayOfWeek,
+                type = type,
+                hours = hours,
+                minutes = minutes,
+                ringtoneUri = ringtoneUri,
+                bundle = bundle,
+            )
     }
 
     override fun cancelAlarm(requestCode: Int) {

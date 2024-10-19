@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.Scaffold as MaterialScaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -17,7 +18,6 @@ import com.ujizin.leafy.core.ui.components.navigation.currentNavItemAsState
 import com.ujizin.leafy.core.ui.components.navigation.drawer.DrawerContent
 import com.ujizin.leafy.core.ui.components.navigation.drawer.DrawerItem
 import kotlinx.coroutines.launch
-import androidx.compose.material3.Scaffold as MaterialScaffold
 
 @Composable
 fun ScaffoldWithDrawer(
@@ -42,16 +42,12 @@ fun ScaffoldWithDrawer(
                     scope.launch { drawerState.close() }
                     navController.navigateToItem(drawerItem)
                 },
-                onCloseDrawer = {
-                    scope.launch { drawerState.close() }
-                },
+                onCloseDrawer = { scope.launch { drawerState.close() } },
             )
         },
     ) {
-        MaterialScaffold(
-            modifier = modifier,
-            bottomBar = { NavigationBar(navController) },
-        ) { innerPadding ->
+        MaterialScaffold(modifier = modifier, bottomBar = { NavigationBar(navController) }) {
+            innerPadding ->
             Box(
                 modifier = Modifier.padding(top = innerPadding.calculateTopPadding()),
                 content = content,

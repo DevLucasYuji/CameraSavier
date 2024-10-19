@@ -55,9 +55,7 @@ internal fun Camera(
                 onCloseClicked = onCloseClicked,
             )
             CameraFooter(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 48.dp, vertical = 32.dp),
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 48.dp, vertical = 32.dp),
                 onTakePicture = onTakePicture,
                 onGalleryClick = onGalleryClick,
                 onSwitchClick = { camSelector = camSelector.inverse },
@@ -69,7 +67,5 @@ internal fun Camera(
 @Composable
 private fun ErrorPopUp(message: String) {
     val context = LocalContext.current
-    LaunchedEffect(message) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
+    LaunchedEffect(message) { Toast.makeText(context, message, Toast.LENGTH_SHORT).show() }
 }

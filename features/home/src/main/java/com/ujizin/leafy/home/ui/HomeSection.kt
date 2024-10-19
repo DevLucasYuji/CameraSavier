@@ -38,15 +38,11 @@ internal fun HomeSection(
     onPlantClick: (Long) -> Unit,
 ) {
     val context = LocalContext.current
-    NavLazyColumn(
-        verticalArrangement = Arrangement.spacedBy(16.dp),
-    ) {
+    NavLazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp)) {
         item {
             Section(
-                title = stringResource(
-                    id = R.string.hello_user,
-                    nickname.capitalize(),
-                ).capitalize(),
+                title =
+                    stringResource(id = R.string.hello_user, nickname.capitalize()).capitalize(),
                 subTitle = stringResource(id = R.string.welcome_back).capitalize(),
                 leadingIcon = {
                     AnimatedButtonIcon(
@@ -65,31 +61,28 @@ internal fun HomeSection(
             )
         }
         when {
-            plants.isEmpty() -> item {
-                EmptySection(
-                    modifier = Modifier.padding(vertical = 32.dp, horizontal = 20.dp),
-                    onClick = onEmptyPlantClick,
-                )
-            }
+            plants.isEmpty() ->
+                item {
+                    EmptySection(
+                        modifier = Modifier.padding(vertical = 32.dp, horizontal = 20.dp),
+                        onClick = onEmptyPlantClick,
+                    )
+                }
 
-            else -> items(plants, key = { it.id }) {
-                HomePlantCard(
-                    plant = it,
-                    onPlantClick = onPlantClick,
-                    onSharedClick = { plant ->
-                        plant.share(context)
-                    },
-                )
-            }
+            else ->
+                items(plants, key = { it.id }) {
+                    HomePlantCard(
+                        plant = it,
+                        onPlantClick = onPlantClick,
+                        onSharedClick = { plant -> plant.share(context) },
+                    )
+                }
         }
     }
 }
 
 @Composable
-fun NavLazyColumn(
-    verticalArrangement: Arrangement.Vertical,
-    content: LazyListScope.() -> Unit,
-) {
+fun NavLazyColumn(verticalArrangement: Arrangement.Vertical, content: LazyListScope.() -> Unit) {
     LazyColumn(
         verticalArrangement = verticalArrangement,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -107,11 +100,11 @@ private fun LazyItemScope.HomePlantCard(
     onSharedClick: (Plant) -> Unit,
 ) {
     CardPlant(
-        modifier = Modifier
-            .animateItemPlacement()
-            .padding(horizontal = 20.dp)
-            .fillMaxWidth()
-            .aspectRatio(1F),
+        modifier =
+            Modifier.animateItemPlacement()
+                .padding(horizontal = 20.dp)
+                .fillMaxWidth()
+                .aspectRatio(1F),
         plant = plant,
         onClick = { onPlantClick(plant.id) },
         onSharedClick = { onSharedClick(plant) },

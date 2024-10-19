@@ -7,9 +7,7 @@ import com.ujizin.leafy.core.ui.extensions.OnClick
 import com.ujizin.leafy.core.ui.extensions.fullSlideInVertically
 import com.ujizin.leafy.core.ui.extensions.fullSlideOutVertically
 
-fun NavGraphBuilder.aboutGraph(
-    onBackPressed: OnClick,
-) {
+fun NavGraphBuilder.aboutGraph(onBackPressed: OnClick) {
     composable<Destination.About>(
         enterTransition = { fullSlideInVertically() },
         exitTransition = { fullSlideOutVertically() },

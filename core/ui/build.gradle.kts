@@ -1,17 +1,11 @@
-plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
-}
+plugins { id("com.ujizin.android-compose") }
 
-apply(from = "$rootDir/config-compose.gradle")
-apply(from = "$rootDir/config-android.gradle")
-
-android {
-    namespace = "com.ujizin.leafy.core.components"
-}
+android { namespace = "com.ujizin.leafy.core.components" }
 
 dependencies {
     implementation(projects.core.themes)
+
+    // TODO remove navigation, domain from core:ui
     implementation(projects.core.navigation)
     implementation(projects.domain)
 

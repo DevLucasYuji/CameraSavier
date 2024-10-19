@@ -18,11 +18,9 @@ import org.junit.Test
 
 class RingtoneUseCaseTest {
 
-    @get:Rule
-    var mainDispatcherRule = TestDispatcherRule()
+    @get:Rule var mainDispatcherRule = TestDispatcherRule()
 
-    @MockK
-    private lateinit var ringtoneRepository: RingtoneRepository
+    @MockK private lateinit var ringtoneRepository: RingtoneRepository
 
     private lateinit var loadRingtonesUseCase: LoadRingtonesUseCase
 
@@ -46,8 +44,6 @@ class RingtoneUseCaseTest {
     }
 
     companion object {
-        private val ringtones = List(10) {
-            Ringtone("$it", "title-$it", "uriContent-$it")
-        }
+        private val ringtones = List(10) { Ringtone("$it", "title-$it", "uriContent-$it") }
     }
 }

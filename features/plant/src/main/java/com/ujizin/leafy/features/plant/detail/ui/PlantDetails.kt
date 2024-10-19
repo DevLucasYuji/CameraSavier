@@ -16,10 +16,7 @@ import com.ujizin.leafy.features.plant.detail.DetailPlantUiState
 import com.ujizin.leafy.features.plant.detail.DetailPlantViewModel
 
 @Composable
-fun PlantDetailsRoute(
-    onBackPressed: OnClick,
-    viewModel: DetailPlantViewModel = hiltViewModel(),
-) {
+fun PlantDetailsRoute(onBackPressed: OnClick, viewModel: DetailPlantViewModel = hiltViewModel()) {
     val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -27,9 +24,7 @@ fun PlantDetailsRoute(
         onBackPressed = onBackPressed,
         uiState = uiState,
         onAlarmChanged = viewModel::updateAlarm,
-        onDeleteClick = { plant ->
-            viewModel.deletePlant(plant, onBackPressed)
-        },
+        onDeleteClick = { plant -> viewModel.deletePlant(plant, onBackPressed) },
         onSharedClick = { plant -> plant.share(context) },
     )
 }
@@ -45,14 +40,15 @@ private fun PlantDetailsContent(
     when (val result: DetailPlantUiState = uiState) {
         DetailPlantUiState.Initial -> PlantDetailsLoading()
         DetailPlantUiState.NotFound -> PlantDetailsNotFound()
-        is DetailPlantUiState.Loaded -> PlantDetailsContent(
-            onBackPressed = onBackPressed,
-            plant = result.plant,
-            alarms = result.alarms,
-            onSharedClick = onSharedClick,
-            onAlarmChanged = onAlarmChanged,
-            onDeleteClick = onDeleteClick,
-        )
+        is DetailPlantUiState.Loaded ->
+            PlantDetailsContent(
+                onBackPressed = onBackPressed,
+                plant = result.plant,
+                alarms = result.alarms,
+                onSharedClick = onSharedClick,
+                onAlarmChanged = onAlarmChanged,
+                onDeleteClick = onDeleteClick,
+            )
     }
 }
 
@@ -63,16 +59,11 @@ private fun PlantDetailsPreview() {
         Surface {
             PlantDetailsContent(
                 onBackPressed = {},
-                uiState = DetailPlantUiState.Loaded(
-                    Plant(
-                        1,
-                        "Plant foo",
-                        "Description",
-                        "foo",
-                        false,
+                uiState =
+                    DetailPlantUiState.Loaded(
+                        Plant(1, "Plant foo", "Description", "foo", false),
+                        alarms = listOf(),
                     ),
-                    alarms = listOf(),
-                ),
                 onAlarmChanged = {},
                 onDeleteClick = {},
                 onSharedClick = {},

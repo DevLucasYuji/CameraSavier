@@ -11,10 +11,7 @@ import com.ujizin.leafy.camera.ui.CameraRoute
 import com.ujizin.leafy.core.navigation.Destination
 import com.ujizin.leafy.core.ui.extensions.OnClick
 
-fun NavGraphBuilder.cameraGraph(
-    onBackPressed: OnClick,
-    onSaveClicked: () -> Unit,
-) {
+fun NavGraphBuilder.cameraGraph(onBackPressed: OnClick, onSaveClicked: () -> Unit) {
     composable<Destination.Camera>(
         enterTransition = {
             slideIntoContainer(
@@ -31,9 +28,6 @@ fun NavGraphBuilder.cameraGraph(
             )
         },
     ) {
-        CameraRoute(
-            onCloseClicked = onBackPressed,
-            onImageSaved = onSaveClicked,
-        )
+        CameraRoute(onCloseClicked = onBackPressed, onImageSaved = onSaveClicked)
     }
 }

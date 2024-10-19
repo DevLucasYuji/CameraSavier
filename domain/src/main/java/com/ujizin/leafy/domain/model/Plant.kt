@@ -1,6 +1,6 @@
 package com.ujizin.leafy.domain.model
 
-/***
+/**
  * Plant Model
  *
  * @param id the plant id

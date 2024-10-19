@@ -9,30 +9,29 @@ import com.ujizin.leafy.domain.model.Plant
 import com.ujizin.leafy.domain.result.mapResult
 import com.ujizin.leafy.domain.usecase.plant.load.LoadPlantUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import javax.inject.Inject
 
 @HiltViewModel
-class PlantEditViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
-    private val loadPlant: LoadPlantUseCase,
-) : ViewModel() {
+class PlantEditViewModel
+@Inject
+constructor(savedStateHandle: SavedStateHandle, private val loadPlant: LoadPlantUseCase) :
+    ViewModel() {
 
     private val plantId: Long = savedStateHandle.toRoute<Destination.PlantEdit>().plantId
 
     private val _uiState = MutableStateFlow<PlantEditUiState>(PlantEditUiState.Initial)
-    val uiState get() = _uiState.asStateFlow()
+    val uiState
+        get() = _uiState.asStateFlow()
 
     fun loadEditPlant() {
         loadPlant(plantId)
             .mapResult()
-            .onEach { plant ->
-                _uiState.update { PlantEditUiState.Success(plant) }
-            }
+            .onEach { plant -> _uiState.update { PlantEditUiState.Success(plant) } }
             .launchIn(viewModelScope)
     }
 }

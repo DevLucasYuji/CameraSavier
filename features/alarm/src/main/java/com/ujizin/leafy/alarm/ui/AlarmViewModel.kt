@@ -16,6 +16,8 @@ import com.ujizin.leafy.domain.usecase.plant.add.AddPlantUseCase
 import com.ujizin.leafy.domain.usecase.plant.load.LoadDraftPlantUseCase
 import com.ujizin.leafy.domain.usecase.ringtone.load.LoadRingtonesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.io.File
+import javax.inject.Inject
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,11 +28,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import java.io.File
-import javax.inject.Inject
 
 @HiltViewModel
-class AlarmViewModel @Inject constructor(
+class AlarmViewModel
+@Inject
+constructor(
     private val loadDraftPlant: LoadDraftPlantUseCase,
     private val addPlant: AddPlantUseCase,
     private val addAlarm: AddAlarmUseCase,
@@ -69,30 +71,32 @@ class AlarmViewModel @Inject constructor(
             .flatMapConcat { plant ->
                 addPlant(plant.copy(id = 0)).flatMapConcat { id ->
                     addAlarm(
-                        Alarm(
-                            plantId = id,
-                            ringtoneUriContent = ringtoneContent,
-                            minutes = minutes,
-                            hours = hours,
-                            weekDays = weekDays.sorted(),
-                            enabled = true,
-                        ),
-                    ).onEach { alarmId ->
-                        alarmScheduler.scheduleAlarm(
-                            dayOfWeek = weekDays.getNearestDay(hours, minutes).ordinal + 1,
-                            hours = hours,
-                            minutes = minutes,
-                            ringtoneUri = ringtoneContent,
-                            requestCode = alarmId.toInt(),
-                            bundle = bundleOf(AlarmReceiver.ALARM_ID_EXTRA to alarmId),
+                            Alarm(
+                                plantId = id,
+                                ringtoneUriContent = ringtoneContent,
+                                minutes = minutes,
+                                hours = hours,
+                                weekDays = weekDays.sorted(),
+                                enabled = true,
+                            )
                         )
-                    }
+                        .onEach { alarmId ->
+                            alarmScheduler.scheduleAlarm(
+                                dayOfWeek = weekDays.getNearestDay(hours, minutes).ordinal + 1,
+                                hours = hours,
+                                minutes = minutes,
+                                ringtoneUri = ringtoneContent,
+                                requestCode = alarmId.toInt(),
+                                bundle = bundleOf(AlarmReceiver.ALARM_ID_EXTRA to alarmId),
+                            )
+                        }
                 }
             }
             .onCompletion { onPlantPublished() }
             .catch {
                 // Handle error
-            }.launchIn(viewModelScope)
+            }
+            .launchIn(viewModelScope)
     }
 }
 

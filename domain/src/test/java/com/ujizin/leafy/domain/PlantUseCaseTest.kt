@@ -27,14 +27,11 @@ import org.junit.Test
 @ExperimentalCoroutinesApi
 class PlantUseCaseTest {
 
-    @get:Rule
-    val mainDispatcherRule = TestDispatcherRule()
+    @get:Rule val mainDispatcherRule = TestDispatcherRule()
 
-    @MockK
-    private lateinit var plantRepository: PlantRepository
+    @MockK private lateinit var plantRepository: PlantRepository
 
-    @MockK
-    private lateinit var fakePlant: Plant
+    @MockK private lateinit var fakePlant: Plant
 
     private lateinit var addPlantUseCase: AddPlantUseCase
 
@@ -66,11 +63,12 @@ class PlantUseCaseTest {
 
     @Test
     fun `when load plant then expect return plants on repository`() = runTest {
-        val expectedPlants = listOf(
-            Plant(id = 1, "", "", "", false),
-            Plant(id = 2, "", "", "", false),
-            Plant(id = 3, "", "", "", false),
-        )
+        val expectedPlants =
+            listOf(
+                Plant(id = 1, "", "", "", false),
+                Plant(id = 2, "", "", "", false),
+                Plant(id = 3, "", "", "", false),
+            )
 
         every { plantRepository.getPlants() } returns flowOf(expectedPlants)
 
@@ -85,17 +83,13 @@ class PlantUseCaseTest {
     fun `when update plant then expect call update plants on repository`() = runTest {
         every { plantRepository.updatePlant(fakePlant) } returns flowOf(Unit)
 
-        updatePlantUseCase(fakePlant).collect {
-            verify { plantRepository.updatePlant(fakePlant) }
-        }
+        updatePlantUseCase(fakePlant).collect { verify { plantRepository.updatePlant(fakePlant) } }
     }
 
     @Test
     fun `when delete plant then expect call delete plants on repository`() = runTest {
         every { plantRepository.deletePlant(fakePlant) } returns flowOf(Unit)
 
-        deletePlantUseCase(fakePlant).collect {
-            verify { plantRepository.deletePlant(fakePlant) }
-        }
+        deletePlantUseCase(fakePlant).collect { verify { plantRepository.deletePlant(fakePlant) } }
     }
 }

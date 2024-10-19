@@ -4,9 +4,7 @@ import android.app.Notification
 import android.app.PendingIntent
 import androidx.core.app.NotificationCompat
 
-/**
- * Create alarm notification for Android system.
- * */
+/** Create alarm notification for Android system. */
 interface AlarmNotificator {
     fun createChannel()
 

@@ -9,13 +9,10 @@ import kotlinx.coroutines.test.setMain
 import org.junit.rules.TestWatcher
 import org.junit.runner.Description
 
-/**
- * Watcher dispatcher rule to use on tests
- * */
+/** Watcher dispatcher rule to use on tests */
 @OptIn(ExperimentalCoroutinesApi::class)
-class TestDispatcherRule(
-    val testDispatcher: TestDispatcher = UnconfinedTestDispatcher(),
-) : TestWatcher() {
+class TestDispatcherRule(val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()) :
+    TestWatcher() {
 
     override fun starting(description: Description) {
         super.starting(description)

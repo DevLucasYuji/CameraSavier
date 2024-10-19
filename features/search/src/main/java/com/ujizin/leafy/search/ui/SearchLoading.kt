@@ -16,15 +16,9 @@ internal fun SearchLoading(
     focusRequester: FocusRequester,
     modifier: Modifier = Modifier,
 ) {
-    LaunchedEffect(autoFocus) {
-        if (autoFocus) focusRequester.requestFocus()
-    }
+    LaunchedEffect(autoFocus) { if (autoFocus) focusRequester.requestFocus() }
 
     Box(modifier = modifier) {
-        CircularProgressIndicator(
-            modifier = Modifier
-                .size(32.dp)
-                .align(Alignment.Center),
-        )
+        CircularProgressIndicator(modifier = Modifier.size(32.dp).align(Alignment.Center))
     }
 }

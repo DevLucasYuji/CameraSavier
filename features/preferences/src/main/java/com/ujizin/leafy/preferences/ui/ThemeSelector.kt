@@ -17,19 +17,13 @@ import com.ujizin.leafy.features.preferences.R
 import com.ujizin.leafy.preferences.extensions.displayResId
 
 @Composable
-fun ThemeSelector(
-    modifier: Modifier = Modifier,
-    theme: Theme,
-    onThemeChanged: (Theme) -> Unit,
-) {
+fun ThemeSelector(modifier: Modifier = Modifier, theme: Theme, onThemeChanged: (Theme) -> Unit) {
     val context = LocalContext.current
     var showModal by remember { mutableStateOf(false) }
     val themes = remember {
         Theme.entries.map { ModalValue(context.getString(it.displayResId), it) }
     }
-    val currentTheme = remember(theme) {
-        ModalValue(context.getString(theme.displayResId), theme)
-    }
+    val currentTheme = remember(theme) { ModalValue(context.getString(theme.displayResId), theme) }
 
     Selector(
         modifier = modifier,

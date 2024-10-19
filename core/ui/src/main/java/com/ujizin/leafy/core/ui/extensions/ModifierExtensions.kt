@@ -11,17 +11,10 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
-fun Modifier.innerShadow(colors: List<Color>, shape: Shape = RectangleShape) = then(
-    Modifier.background(
-        brush = Brush.verticalGradient(colors),
-        shape = shape,
-    ),
-)
+fun Modifier.innerShadow(colors: List<Color>, shape: Shape = RectangleShape) =
+    then(Modifier.background(brush = Brush.verticalGradient(colors), shape = shape))
 
-fun Modifier.paddingScreen(horizontal: Dp = 20.dp, vertical: Dp = 0.dp) = then(
-    Modifier.padding(horizontal = horizontal, vertical = vertical),
-)
+fun Modifier.paddingScreen(horizontal: Dp = 20.dp, vertical: Dp = 0.dp) =
+    then(Modifier.padding(horizontal = horizontal, vertical = vertical))
 
-fun Modifier.noClickable() = then(
-    Modifier.clickable(enabled = false, onClick = {}),
-)
+fun Modifier.noClickable() = then(Modifier.clickable(enabled = false, onClick = {}))

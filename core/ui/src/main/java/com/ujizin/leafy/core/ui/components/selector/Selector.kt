@@ -41,9 +41,7 @@ fun Selector(
         onModalStateChanged = onModalStateChanged,
         content = content,
     )
-    ButtonRow(modifier, title, subTitle, value) {
-        onModalStateChanged(true)
-    }
+    ButtonRow(modifier, title, subTitle, value) { onModalStateChanged(true) }
 }
 
 @Composable
@@ -56,9 +54,7 @@ fun ButtonRow(
     onClick: () -> Unit,
 ) {
     Row(
-        modifier = Modifier
-            .clickable(onClick = onClick)
-            .then(modifier),
+        modifier = Modifier.clickable(onClick = onClick).then(modifier),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
@@ -74,8 +70,7 @@ fun ButtonRow(
                 Text(text = value.capitalize())
             }
             ArrowIcon(
-                Modifier
-                    .padding(start = 8.dp)
+                Modifier.padding(start = 8.dp)
                     .width(arrowDirection.width)
                     .height(arrowDirection.height),
                 direction = arrowDirection,
@@ -123,14 +118,10 @@ private fun ArrowIcon(
 fun PreviewSelector() {
     LeafyTheme {
         Selector(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp),
+            modifier = Modifier.fillMaxWidth().padding(20.dp),
             title = "ring",
             value = "rang",
-            content = {
-                Text("Foo")
-            },
+            content = { Text("Foo") },
         )
     }
 }
@@ -140,15 +131,11 @@ fun PreviewSelector() {
 fun PreviewSelectorWithSubtitle() {
     LeafyTheme {
         Selector(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp),
+            modifier = Modifier.fillMaxWidth().padding(20.dp),
             title = "ring",
             subTitle = "rong",
             value = "rang",
-            content = {
-                Text("Foo")
-            },
+            content = { Text("Foo") },
         )
     }
 }
@@ -158,14 +145,10 @@ fun PreviewSelectorWithSubtitle() {
 fun PreviewSelectorWithNoValue() {
     LeafyTheme {
         Selector(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(20.dp),
+            modifier = Modifier.fillMaxWidth().padding(20.dp),
             title = "ring",
             subTitle = "rong",
-            content = {
-                Text("Foo")
-            },
+            content = { Text("Foo") },
         )
     }
 }

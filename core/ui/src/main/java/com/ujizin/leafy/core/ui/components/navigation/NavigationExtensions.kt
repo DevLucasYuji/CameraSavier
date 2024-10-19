@@ -16,25 +16,28 @@ import androidx.navigation.NavController
 import com.ujizin.leafy.core.navigation.qualifiedRoute
 import com.ujizin.leafy.core.ui.components.navigation.bottombar.BottomNavItem
 
-val ExitTransition?.orNone get() = this ?: ExitTransition.None
+val ExitTransition?.orNone
+    get() = this ?: ExitTransition.None
 
 private enum class NavDirection {
-    Start, End, None,
+    Start,
+    End,
+    None,
 }
 
-private fun navDirection(
-    navController: NavController,
-): NavDirection {
+private fun navDirection(navController: NavController): NavDirection {
     val previousDestination = navController.previousBackStackEntry?.destination?.qualifiedRoute
     val currentDestination = navController.currentBackStackEntry?.destination?.qualifiedRoute
 
-    val previousBottomNavItem = BottomNavItem.entries.firstOrNull {
-        it.destination::class.qualifiedName == previousDestination
-    } ?: return NavDirection.End
+    val previousBottomNavItem =
+        BottomNavItem.entries.firstOrNull {
+            it.destination::class.qualifiedName == previousDestination
+        } ?: return NavDirection.End
 
-    val currentBottomNavItem = BottomNavItem.entries.firstOrNull {
-        it.destination::class.qualifiedName == currentDestination
-    } ?: return NavDirection.End
+    val currentBottomNavItem =
+        BottomNavItem.entries.firstOrNull {
+            it.destination::class.qualifiedName == currentDestination
+        } ?: return NavDirection.End
 
     if (currentBottomNavItem == BottomNavItem.Camera) return NavDirection.None
 
@@ -45,59 +48,55 @@ private fun navDirection(
 }
 
 fun AnimatedContentTransitionScope<*>.navigationEnterTransition(
-    navController: NavController,
+    navController: NavController
 ): EnterTransition? {
-    val direction = when (navDirection(navController)) {
-        NavDirection.Start -> AnimatedContentTransitionScope.SlideDirection.Start
-        NavDirection.End -> AnimatedContentTransitionScope.SlideDirection.End
-        NavDirection.None -> null
-    } ?: return null
+    val direction =
+        when (navDirection(navController)) {
+            NavDirection.Start -> AnimatedContentTransitionScope.SlideDirection.Start
+            NavDirection.End -> AnimatedContentTransitionScope.SlideDirection.End
+            NavDirection.None -> null
+        } ?: return null
 
     return slideIntoContainer(
         direction,
-        animationSpec = spring(
-            Spring.DampingRatioLowBouncy,
-            Spring.StiffnessMediumLow,
-        ),
+        animationSpec = spring(Spring.DampingRatioLowBouncy, Spring.StiffnessMediumLow),
     ) + fadeIn()
 }
 
 fun AnimatedContentTransitionScope<*>.navigationExitTransition(
-    navController: NavController,
+    navController: NavController
 ): ExitTransition? {
-    val direction = when (navDirection(navController)) {
-        NavDirection.Start -> AnimatedContentTransitionScope.SlideDirection.Start
-        NavDirection.End -> AnimatedContentTransitionScope.SlideDirection.End
-        NavDirection.None -> null
-    } ?: return null
+    val direction =
+        when (navDirection(navController)) {
+            NavDirection.Start -> AnimatedContentTransitionScope.SlideDirection.Start
+            NavDirection.End -> AnimatedContentTransitionScope.SlideDirection.End
+            NavDirection.None -> null
+        } ?: return null
 
     return slideOutOfContainer(
         direction,
-        animationSpec = spring(
-            Spring.DampingRatioNoBouncy,
-            Spring.StiffnessMedium,
-        ),
+        animationSpec = spring(Spring.DampingRatioNoBouncy, Spring.StiffnessMedium),
     ) + fadeOut()
 }
 
 @Composable
 internal inline fun <reified T : NavItem> NavController.currentNavItemAsState(
-    initialNavItem: T? = null,
+    initialNavItem: T? = null
 ): State<T?> {
     val selectedItem = remember(initialNavItem) { mutableStateOf(initialNavItem) }
     DisposableEffect(this) {
-        val listener = NavController.OnDestinationChangedListener { _, destination, _ ->
-            val currentDestination = destination.qualifiedRoute
-            val value = T::class.java.enumConstants?.firstOrNull {
-                it.destination::class.qualifiedName == currentDestination
+        val listener =
+            NavController.OnDestinationChangedListener { _, destination, _ ->
+                val currentDestination = destination.qualifiedRoute
+                val value =
+                    T::class.java.enumConstants?.firstOrNull {
+                        it.destination::class.qualifiedName == currentDestination
+                    }
+                selectedItem.value = value
             }
-            selectedItem.value = value
-        }
         addOnDestinationChangedListener(listener)
 
-        onDispose {
-            removeOnDestinationChangedListener(listener)
-        }
+        onDispose { removeOnDestinationChangedListener(listener) }
     }
 
     return selectedItem

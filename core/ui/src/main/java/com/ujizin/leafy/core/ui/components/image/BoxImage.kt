@@ -32,11 +32,13 @@ fun BoxImage(
             contentDescription = contentDescription,
         )
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .innerShadow(Shadow.Black, RoundedCornerShape(4.dp))
-                .padding(12.dp),
+            modifier =
+                Modifier.fillMaxSize()
+                    .innerShadow(Shadow.Black, RoundedCornerShape(4.dp))
+                    .padding(12.dp),
             contentAlignment = contentAlignment,
-        ) { content() }
+        ) {
+            content()
+        }
     }
 }

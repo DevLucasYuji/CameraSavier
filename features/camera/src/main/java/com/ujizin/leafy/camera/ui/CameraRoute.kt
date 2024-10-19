@@ -34,52 +34,51 @@ internal fun CameraRoute(
         PermissionStatus.Granted -> {
             val uiState by viewModel.uiState.collectAsStateWithLifecycle()
             val cameraState = rememberCameraState()
-            val launcher = rememberLauncherForActivityResult(PickVisualMedia()) launcher@{ uri ->
-                if (uri == null) return@launcher
-                viewModel.preparePreview(
-                    contentResolver = context.contentResolver,
-                    uri = uri,
-                )
-            }
+            val launcher =
+                rememberLauncherForActivityResult(PickVisualMedia()) launcher@{ uri ->
+                    if (uri == null) return@launcher
+                    viewModel.preparePreview(contentResolver = context.contentResolver, uri = uri)
+                }
 
             when (val state = uiState) {
-                is CameraUiState.Preview -> CameraPreviewSection(
-                    bitmap = state.bitmap,
-                    onBackPressed = viewModel::onBackCamera,
-                    onSaveClicked = {
-                        viewModel.saveImage(
-                            context = context,
-                            bitmap = state.bitmap,
-                            onImageSaved = onImageSaved,
-                        )
-                    },
-                )
+                is CameraUiState.Preview ->
+                    CameraPreviewSection(
+                        bitmap = state.bitmap,
+                        onBackPressed = viewModel::onBackCamera,
+                        onSaveClicked = {
+                            viewModel.saveImage(
+                                context = context,
+                                bitmap = state.bitmap,
+                                onImageSaved = onImageSaved,
+                            )
+                        },
+                    )
 
-                else -> Camera(
-                    uiState = state,
-                    cameraState = cameraState,
-                    onCloseClicked = onCloseClicked,
-                    onTakePicture = { viewModel.takePicture(cameraState) },
-                    onGalleryClick = {
-                        launcher.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
-                    },
-                )
+                else ->
+                    Camera(
+                        uiState = state,
+                        cameraState = cameraState,
+                        onCloseClicked = onCloseClicked,
+                        onTakePicture = { viewModel.takePicture(cameraState) },
+                        onGalleryClick = {
+                            launcher.launch(PickVisualMediaRequest(PickVisualMedia.ImageOnly))
+                        },
+                    )
             }
         }
 
-        is PermissionStatus.Denied -> CameraDenied(
-            shouldShowRationale = status.shouldShowRationale,
-            onBackPressed = onCloseClicked,
-        ) {
-            if (status.shouldShowRationale) {
-                cameraPermissionState.launchPermissionRequest()
-            } else {
-                context.startSettingsPermission()
+        is PermissionStatus.Denied ->
+            CameraDenied(
+                shouldShowRationale = status.shouldShowRationale,
+                onBackPressed = onCloseClicked,
+            ) {
+                if (status.shouldShowRationale) {
+                    cameraPermissionState.launchPermissionRequest()
+                } else {
+                    context.startSettingsPermission()
+                }
             }
-        }
     }
 
-    LaunchedEffect(Unit) {
-        cameraPermissionState.launchPermissionRequest()
-    }
+    LaunchedEffect(Unit) { cameraPermissionState.launchPermissionRequest() }
 }

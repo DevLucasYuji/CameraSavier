@@ -16,10 +16,7 @@ internal fun Toolbar(
     leadingIcon: @Composable Content?,
     trailingIcon: @Composable Content?,
 ) {
-    Row(
-        modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-    ) {
+    Row(modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         leadingIcon?.invoke()
         trailingIcon?.invoke()
     }

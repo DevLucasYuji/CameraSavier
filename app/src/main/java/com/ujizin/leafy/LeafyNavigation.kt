@@ -27,31 +27,19 @@ import com.ujizin.leafy.search.searchGraph
 import kotlinx.coroutines.launch
 
 @Composable
-fun LeafyNavigation(
-    navController: NavHostController,
-    drawerState: DrawerState,
-) {
+fun LeafyNavigation(navController: NavHostController, drawerState: DrawerState) {
     val scope = rememberCoroutineScope()
     ScaffoldWithDrawer(
-        modifier = Modifier
-            .imePadding()
-            .navigationBarsPadding(),
+        modifier = Modifier.imePadding().navigationBarsPadding(),
         drawerState = drawerState,
         navController = navController,
     ) {
-        NavHost(
-            navController = navController,
-            startDestination = Destination.Home,
-        ) {
+        NavHost(navController = navController, startDestination = Destination.Home) {
             homeGraph(
                 enterTransition = { navigationEnterTransition(navController) },
-                exitTransition = {
-                    navigationExitTransition(navController).orNone
-                },
+                exitTransition = { navigationExitTransition(navController).orNone },
                 onTakePictureClick = { navController.navigate(Destination.Camera) },
-                onSearchClick = {
-                    navController.navigate(Destination.Search(true))
-                },
+                onSearchClick = { navController.navigate(Destination.Search(true)) },
                 onDrawerClick = { scope.launch { drawerState.open() } },
                 onPlantClick = { plantId ->
                     navController.navigate(Destination.PlantDetails(plantId))

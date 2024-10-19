@@ -3,9 +3,9 @@ package com.ujizin.leafy.alarm
 import com.ujizin.leafy.core.ui.extensions.plus
 import com.ujizin.leafy.core.ui.extensions.reorderByCurrentDay
 import com.ujizin.leafy.domain.model.WeekDay
+import kotlin.random.Random
 import org.junit.Assert
 import org.junit.Test
-import kotlin.random.Random
 
 class WeekDayExtensionsTest {
 

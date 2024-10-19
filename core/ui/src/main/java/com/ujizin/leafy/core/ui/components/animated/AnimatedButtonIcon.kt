@@ -45,9 +45,7 @@ fun AnimatedButtonIcon(
             onClick = onClick,
         ) {
             androidx.compose.material3.Icon(
-                modifier = Modifier
-                    .padding(innerPaddingValues)
-                    .size(size.takeOrElse { 32.dp }),
+                modifier = Modifier.padding(innerPaddingValues).size(size.takeOrElse { 32.dp }),
                 painter = painterResource(icon.idRes),
                 tint = tint ?: MaterialTheme.colorScheme.onBackground,
                 contentDescription = stringResource(icon.descriptionRes),

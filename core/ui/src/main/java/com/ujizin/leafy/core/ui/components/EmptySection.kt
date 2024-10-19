@@ -51,18 +51,12 @@ fun EmptySection(
             maxLines = 3,
             overflow = TextOverflow.Ellipsis,
         )
-        Button(
-            text = buttonTitle.capitalize(),
-            enabled = enabled,
-            onClick = onClick,
-        )
+        Button(text = buttonTitle.capitalize(), enabled = enabled, onClick = onClick)
     }
 }
 
 @Preview
 @Composable
 fun PreviewEmptySection() {
-    LeafyTheme {
-        EmptySection {}
-    }
+    LeafyTheme { EmptySection {} }
 }

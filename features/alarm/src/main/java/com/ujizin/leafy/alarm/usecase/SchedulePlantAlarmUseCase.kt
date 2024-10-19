@@ -12,9 +12,7 @@ import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapConcat
 import kotlinx.coroutines.flow.onEach
 
-/**
- * Schedule plant alarm use case
- * */
+/** Schedule plant alarm use case */
 class SchedulePlantAlarmUseCase(
     private val loadPlant: LoadPlantUseCase,
     private val loadAlarm: LoadAlarmUseCase,
@@ -22,11 +20,12 @@ class SchedulePlantAlarmUseCase(
 ) {
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    operator fun invoke(alarmId: Long, actualDay: WeekDay = currentDay) = loadAlarm(alarmId)
-        .mapResult()
-        .onEach { alarmScheduler.scheduleAlarm(it, actualDay) }
-        .filter { alarm -> alarm.enabled && alarm.checkDayOfTheWeek() }
-        .flatMapConcat { alarm -> loadPlant(alarm.plantId).mapResult() }
+    operator fun invoke(alarmId: Long, actualDay: WeekDay = currentDay) =
+        loadAlarm(alarmId)
+            .mapResult()
+            .onEach { alarmScheduler.scheduleAlarm(it, actualDay) }
+            .filter { alarm -> alarm.enabled && alarm.checkDayOfTheWeek() }
+            .flatMapConcat { alarm -> loadPlant(alarm.plantId).mapResult() }
 
     private fun Alarm.checkDayOfTheWeek(): Boolean {
         return weekDays.contains(currentDay)

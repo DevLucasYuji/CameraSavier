@@ -29,49 +29,40 @@ object PlantModule {
 
     @Provides
     @Singleton
-    fun provideLoadAllPlants(
-        repository: PlantRepository,
-    ): LoadAllPlantUseCase = LoadAllPlantUseCaseImpl(repository)
+    fun provideLoadAllPlants(repository: PlantRepository): LoadAllPlantUseCase =
+        LoadAllPlantUseCaseImpl(repository)
 
     @Provides
     @Singleton
-    fun provideLoadPlant(
-        repository: PlantRepository,
-    ): LoadPlantUseCase = LoadPlantUseCaseImpl(repository)
+    fun provideLoadPlant(repository: PlantRepository): LoadPlantUseCase =
+        LoadPlantUseCaseImpl(repository)
 
     @Provides
     @Singleton
-    fun provideAddPlant(
-        repository: PlantRepository,
-    ): AddPlantUseCase = AddPlantUseCaseImpl(repository)
+    fun provideAddPlant(repository: PlantRepository): AddPlantUseCase =
+        AddPlantUseCaseImpl(repository)
 
     @Provides
     @Singleton
-    fun provideFindPlant(
-        repository: PlantRepository,
-    ): FindPlantUseCase = FindPlantUseCaseImpl(repository)
+    fun provideFindPlant(repository: PlantRepository): FindPlantUseCase =
+        FindPlantUseCaseImpl(repository)
 
     @Provides
     @Singleton
-    fun provideUpdatePlant(
-        repository: PlantRepository,
-    ): UpdatePlant = UpdatePlantImpl(repository)
+    fun provideUpdatePlant(repository: PlantRepository): UpdatePlant = UpdatePlantImpl(repository)
 
     @Provides
     @Singleton
-    fun provideDeletePlant(
-        repository: PlantRepository,
-    ): DeletePlantUseCase = DeletePlantUseCaseImpl(repository)
+    fun provideDeletePlant(repository: PlantRepository): DeletePlantUseCase =
+        DeletePlantUseCaseImpl(repository)
 
     @Provides
     @Singleton
-    fun provideAddDraftPlant(
-        repository: PlantRepository,
-    ): AddDraftPlantUseCase = AddDraftPlantUseCaseImpl(repository)
+    fun provideAddDraftPlant(repository: PlantRepository): AddDraftPlantUseCase =
+        AddDraftPlantUseCaseImpl(repository)
 
     @Provides
     @Singleton
-    fun provideLoadDraftPlant(
-        repository: PlantRepository,
-    ): LoadDraftPlantUseCase = LoadDraftPlantUseCaseImpl(repository)
+    fun provideLoadDraftPlant(repository: PlantRepository): LoadDraftPlantUseCase =
+        LoadDraftPlantUseCaseImpl(repository)
 }

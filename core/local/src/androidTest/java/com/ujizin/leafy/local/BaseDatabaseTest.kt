@@ -15,8 +15,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4ClassRunner::class)
 abstract class BaseDatabaseTest {
 
-    @get:Rule
-    val mainDispatcherRule = TestDispatcherRule()
+    @get:Rule val mainDispatcherRule = TestDispatcherRule()
 
     protected lateinit var db: Database
 

@@ -6,7 +6,8 @@ import com.ujizin.leafy.features.preferences.R
 
 val Language.displayResId: Int
     @StringRes
-    get() = when (this) {
-        Language.PT -> R.string.portuguese
-        Language.EN -> R.string.english
-    }
+    get() =
+        when (this) {
+            Language.PT -> R.string.portuguese
+            Language.EN -> R.string.english
+        }

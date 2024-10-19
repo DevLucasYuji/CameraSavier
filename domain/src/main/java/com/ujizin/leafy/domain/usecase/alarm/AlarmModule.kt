@@ -23,31 +23,26 @@ object AlarmModule {
 
     @Provides
     @Singleton
-    fun provideAddAlarm(
-        repository: AlarmRepository,
-    ): AddAlarmUseCase = AddAlarmUseCaseImpl(repository)
+    fun provideAddAlarm(repository: AlarmRepository): AddAlarmUseCase =
+        AddAlarmUseCaseImpl(repository)
 
     @Provides
     @Singleton
-    fun provideLoadAlarm(
-        repository: AlarmRepository,
-    ): LoadAlarmUseCase = LoadAlarmUseCaseImpl(repository)
+    fun provideLoadAlarm(repository: AlarmRepository): LoadAlarmUseCase =
+        LoadAlarmUseCaseImpl(repository)
 
     @Provides
     @Singleton
-    fun provideLoadAlarms(
-        repository: AlarmRepository,
-    ): LoadAlarmsUseCase = LoadAlarmsUseCaseImpl(repository)
+    fun provideLoadAlarms(repository: AlarmRepository): LoadAlarmsUseCase =
+        LoadAlarmsUseCaseImpl(repository)
 
     @Provides
     @Singleton
-    fun provideUpdateAlarm(
-        repository: AlarmRepository,
-    ): UpdateAlarmUseCase = UpdateAlarmUseCaseImpl(repository)
+    fun provideUpdateAlarm(repository: AlarmRepository): UpdateAlarmUseCase =
+        UpdateAlarmUseCaseImpl(repository)
 
     @Provides
     @Singleton
-    fun provideDeleteAlarm(
-        repository: AlarmRepository,
-    ): DeleteAlarmUseCase = DeleteAlarmUseCaseImpl(repository)
+    fun provideDeleteAlarm(repository: AlarmRepository): DeleteAlarmUseCase =
+        DeleteAlarmUseCaseImpl(repository)
 }

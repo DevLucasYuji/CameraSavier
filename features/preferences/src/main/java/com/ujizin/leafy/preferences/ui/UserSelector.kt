@@ -35,11 +35,7 @@ fun UserSelector(
         onModalStateChanged = { showModal = it },
     ) {
         UserTextField(
-            modifier = Modifier.padding(
-                start = 20.dp,
-                end = 20.dp,
-                bottom = 20.dp,
-            ),
+            modifier = Modifier.padding(start = 20.dp, end = 20.dp, bottom = 20.dp),
             label = stringResource(R.string.nickname).capitalize(),
             nickname = nickname,
             onSaveNickname = { nickname ->
@@ -62,17 +58,13 @@ fun UserTextField(
 
         Text(text = label, style = MaterialTheme.typography.titleMedium)
         TextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp),
+            modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
             value = newNickname,
             placeholder = { Placeholder(text = nickname) },
             onValueChange = { newNickname = it },
         )
         Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp),
+            modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
             text = stringResource(R.string.update),
             onClick = { onSaveNickname(newNickname) },
         )

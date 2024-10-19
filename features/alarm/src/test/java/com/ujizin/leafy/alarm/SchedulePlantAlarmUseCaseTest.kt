@@ -11,6 +11,8 @@ import com.ujizin.leafy.domain.model.WeekDay
 import io.mockk.every
 import io.mockk.mockkConstructor
 import io.mockk.mockkStatic
+import java.util.Calendar
+import java.util.Calendar.DAY_OF_WEEK
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNotNull
 import kotlinx.coroutines.flow.flowOn
@@ -21,14 +23,11 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
-import java.util.Calendar
-import java.util.Calendar.DAY_OF_WEEK
 
 @RunWith(JUnit4::class)
 class SchedulePlantAlarmUseCaseTest {
 
-    @get:Rule
-    val mainDispatcherRule = TestDispatcherRule()
+    @get:Rule val mainDispatcherRule = TestDispatcherRule()
 
     private val alarmScheduler = FakeAlarmScheduler()
 
@@ -36,11 +35,12 @@ class SchedulePlantAlarmUseCaseTest {
 
     private val loadAlarm = FakeLoadAlarmUseCase(until = COUNTER)
 
-    val schedulePlantAlarm = SchedulePlantAlarmUseCase(
-        loadPlant = loadPlant,
-        loadAlarm = loadAlarm,
-        alarmScheduler = alarmScheduler,
-    )
+    val schedulePlantAlarm =
+        SchedulePlantAlarmUseCase(
+            loadPlant = loadPlant,
+            loadAlarm = loadAlarm,
+            alarmScheduler = alarmScheduler,
+        )
 
     @Test
     fun `test alarm is scheduled will ring in exact time whether enabled`() {
@@ -65,9 +65,11 @@ class SchedulePlantAlarmUseCaseTest {
                         .collect {
                             isFlowCollected = true
 
-                            val alarmScheduled = alarmScheduler.alarms.find { scheduled ->
-                                scheduled.hours == alarm.hours && scheduled.minutes == alarm.minutes
-                            }
+                            val alarmScheduled =
+                                alarmScheduler.alarms.find { scheduled ->
+                                    scheduled.hours == alarm.hours &&
+                                        scheduled.minutes == alarm.minutes
+                                }
 
                             assertNotNull(alarmScheduled)
                             assertEquals(alarm.plantId, it.id)

@@ -40,9 +40,7 @@ fun <T : Any> ModalSelector(
         LazyColumn {
             items(values) { value ->
                 ModalItemSelector(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp, vertical = 16.dp),
+                    Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 16.dp),
                     text = value.name.capitalize(),
                     enabled = enabled,
                     selected = currentValue == value,
@@ -63,27 +61,30 @@ fun ModalItemSelector(
     onItemSelectorClicked: () -> Unit,
 ) {
     Row(
-        modifier = Modifier
-            .then(if (enabled) Modifier.clickable(onClick = onItemSelectorClicked) else Modifier)
-            .then(modifier),
+        modifier =
+            Modifier.then(
+                    if (enabled) Modifier.clickable(onClick = onItemSelectorClicked) else Modifier
+                )
+                .then(modifier),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         Text(text = text)
         Box(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.primary, CircleShape)
-                .size(24.dp)
-                .padding(8.dp)
-                .then(
-                    when {
-                        selected -> Modifier.background(
-                            MaterialTheme.colorScheme.onPrimary,
-                            CircleShape,
-                        )
+            modifier =
+                Modifier.background(MaterialTheme.colorScheme.primary, CircleShape)
+                    .size(24.dp)
+                    .padding(8.dp)
+                    .then(
+                        when {
+                            selected ->
+                                Modifier.background(
+                                    MaterialTheme.colorScheme.onPrimary,
+                                    CircleShape,
+                                )
 
-                        else -> Modifier
-                    },
-                ),
+                            else -> Modifier
+                        }
+                    )
         )
     }
 }

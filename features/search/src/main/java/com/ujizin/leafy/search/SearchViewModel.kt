@@ -11,16 +11,18 @@ import com.ujizin.leafy.domain.result.Result
 import com.ujizin.leafy.domain.usecase.plant.find.FindPlantUseCase
 import com.ujizin.leafy.domain.usecase.plant.load.LoadAllPlantUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(
+class SearchViewModel
+@Inject
+constructor(
     savedStateHandle: SavedStateHandle,
     private val loadPlants: LoadAllPlantUseCase,
     private val findPlant: FindPlantUseCase,
@@ -33,9 +35,11 @@ class SearchViewModel @Inject constructor(
 
     fun search(sentence: String) {
         when {
-            sentence.isBlank() -> loadPlants()
-            else -> findPlant(sentence)
-        }.onEachPlant().launchIn(viewModelScope)
+                sentence.isBlank() -> loadPlants()
+                else -> findPlant(sentence)
+            }
+            .onEachPlant()
+            .launchIn(viewModelScope)
     }
 
     private fun Flow<Result<List<Plant>>>.onEachPlant() = onEach { result ->
@@ -56,12 +60,9 @@ class SearchViewModel @Inject constructor(
 }
 
 sealed class SearchUiState(val items: List<Plant>) {
-    @Immutable
-    data class Initial(val autoFocus: Boolean = false) : SearchUiState(emptyList())
+    @Immutable data class Initial(val autoFocus: Boolean = false) : SearchUiState(emptyList())
 
-    @Immutable
-    data object Empty : SearchUiState(emptyList())
+    @Immutable data object Empty : SearchUiState(emptyList())
 
-    @Immutable
-    data class Loaded(private val data: List<Plant>) : SearchUiState(data)
+    @Immutable data class Loaded(private val data: List<Plant>) : SearchUiState(data)
 }

@@ -48,31 +48,25 @@ fun PublishContent(
     onNextClicked: (title: String, description: String) -> Unit,
 ) {
     Section(
-        modifier = Modifier
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
+        modifier = Modifier.fillMaxSize().verticalScroll(rememberScrollState()),
         title = stringResource(R.string.publish_title),
         subTitle = stringResource(R.string.publish_description),
         animation = Animation.SlideToTopLargeDuration,
-        trailingIcon = {
-            AnimatedButtonIcon(icon = Icons.Back, onClick = onBackPressed)
-        },
+        trailingIcon = { AnimatedButtonIcon(icon = Icons.Back, onClick = onBackPressed) },
     ) {
         var title by rememberSaveable { mutableStateOf("") }
         var description by rememberSaveable { mutableStateOf("") }
         TextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 32.dp, start = 20.dp, end = 20.dp),
+            modifier = Modifier.fillMaxWidth().padding(top = 32.dp, start = 20.dp, end = 20.dp),
             placeholder = { Placeholder(text = stringResource(R.string.title)) },
             value = title,
             onValueChange = { title = it },
         )
         TextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1.75F)
-                .padding(top = 16.dp, start = 20.dp, end = 20.dp),
+            modifier =
+                Modifier.fillMaxWidth()
+                    .aspectRatio(1.75F)
+                    .padding(top = 16.dp, start = 20.dp, end = 20.dp),
             placeholder = { Placeholder(text = stringResource(R.string.description)) },
             singleLine = false,
             value = description,
@@ -80,9 +74,7 @@ fun PublishContent(
         )
         Spacer(modifier = Modifier.weight(1F))
         Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .paddingScreen(vertical = 16.dp),
+            modifier = Modifier.fillMaxWidth().paddingScreen(vertical = 16.dp),
             enabled = title.isNotBlank() && description.isNotBlank(),
             text = stringResource(R.string.next),
             onClick = { onNextClicked(title, description) },

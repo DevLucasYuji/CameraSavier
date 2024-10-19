@@ -50,20 +50,18 @@ private fun HomeContent(
     modifier: Modifier = Modifier,
     onPlantClick: (Long) -> Unit,
 ) {
-    Box(
-        modifier = modifier,
-        contentAlignment = Alignment.TopCenter,
-    ) {
+    Box(modifier = modifier, contentAlignment = Alignment.TopCenter) {
         when (val result: HomeUIState = state) {
             HomeUIState.Loading -> {}
-            is HomeUIState.Success -> HomeSection(
-                nickname = nickname,
-                plants = result.plants,
-                onEmptyPlantClick = onTakePictureClick,
-                onSearchClick = onSearchClick,
-                onDrawerClick = onDrawerClick,
-                onPlantClick = onPlantClick,
-            )
+            is HomeUIState.Success ->
+                HomeSection(
+                    nickname = nickname,
+                    plants = result.plants,
+                    onEmptyPlantClick = onTakePictureClick,
+                    onSearchClick = onSearchClick,
+                    onDrawerClick = onDrawerClick,
+                    onPlantClick = onPlantClick,
+                )
 
             is HomeUIState.Error -> {}
         }

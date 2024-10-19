@@ -15,7 +15,6 @@ object FileModule {
 
     @Provides
     @Singleton
-    fun provideSaveFile(
-        repository: FileRepository,
-    ): SaveFileUseCase = SaveFileUseCaseImpl(repository)
+    fun provideSaveFile(repository: FileRepository): SaveFileUseCase =
+        SaveFileUseCaseImpl(repository)
 }

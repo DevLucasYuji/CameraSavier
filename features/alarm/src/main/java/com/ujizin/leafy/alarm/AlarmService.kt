@@ -17,6 +17,7 @@ import com.ujizin.leafy.alarm.extensions.getAlarmIntent
 import com.ujizin.leafy.alarm.extensions.orDefaultRingtone
 import com.ujizin.leafy.alarm.notificator.AlarmNotificator
 import com.ujizin.leafy.alarm.receiver.StopPlantServiceActivity
+import com.ujizin.leafy.core.components.R as CR
 import com.ujizin.leafy.core.navigation.Destination
 import com.ujizin.leafy.core.ui.props.RequestCode
 import com.ujizin.leafy.features.alarm.R
@@ -24,30 +25,28 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 import javax.inject.Inject
 import kotlin.time.Duration.Companion.minutes
-import com.ujizin.leafy.core.components.R as CR
 
 @AndroidEntryPoint
 class AlarmService : Service() {
 
     private var mediaPlayer: MediaPlayer? = null
 
-    @Inject
-    lateinit var alarmNotificator: AlarmNotificator
+    @Inject lateinit var alarmNotificator: AlarmNotificator
 
-    private val Intent.plantId get() = getLongExtra(PLANT_ID, -1)
+    private val Intent.plantId
+        get() = getLongExtra(PLANT_ID, -1)
 
     private val Intent.ringtoneUri
         get() = getStringExtra(RINGTONE_URI_STRINGIFY_ARG)?.let(Uri::parse).orDefaultRingtone()
 
-    private val countDownTimer = object : CountDownTimer(
-        TIME_OUT_IN_MILLISECONDS,
-        TICK_IN_MILLISECONDS,
-    ) {
-        override fun onTick(millisUntilFinished: Long) = Unit /* no-op */
-        override fun onFinish() {
-            mediaPlayer?.pause()
+    private val countDownTimer =
+        object : CountDownTimer(TIME_OUT_IN_MILLISECONDS, TICK_IN_MILLISECONDS) {
+            override fun onTick(millisUntilFinished: Long) = Unit /* no-op */
+
+            override fun onFinish() {
+                mediaPlayer?.pause()
+            }
         }
-    }
 
     private val wakeLock: PowerManager.WakeLock by lazy {
         (getSystemService(POWER_SERVICE) as PowerManager).run {
@@ -70,10 +69,11 @@ class AlarmService : Service() {
     }
 
     @Suppress("DEPRECATION")
-    private fun stopForeground() = when {
-        Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> stopForeground(STOP_FOREGROUND_REMOVE)
-        else -> stopForeground(true)
-    }
+    private fun stopForeground() =
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.N -> stopForeground(STOP_FOREGROUND_REMOVE)
+            else -> stopForeground(true)
+        }
 
     private fun startAlarm(intent: Intent) {
         wakeLock.acquire(1.minutes.inWholeMilliseconds)
@@ -92,51 +92,49 @@ class AlarmService : Service() {
             title = title,
             description = description,
             contentIntent = contentIntent,
-            notificationActions = listOf(
-                NotificationCompat.Action(0, getString(R.string.stop), stopIntent),
-            ),
+            notificationActions =
+                listOf(NotificationCompat.Action(0, getString(R.string.stop), stopIntent)),
         )
     }
 
-    private fun getAlarmPendingIntent(action: String) = PendingIntent.getService(
-        this,
-        RequestCode.ALARM,
-        getAlarmIntent(action),
-        PendingIntent.FLAG_IMMUTABLE,
-    )
+    private fun getAlarmPendingIntent(action: String) =
+        PendingIntent.getService(
+            this,
+            RequestCode.ALARM,
+            getAlarmIntent(action),
+            PendingIntent.FLAG_IMMUTABLE,
+        )
 
     private fun Uri.play() {
         try {
-            val audioAttributes = AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_ALARM)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .build()
+            val audioAttributes =
+                AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_ALARM)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .build()
 
-            mediaPlayer = MediaPlayer().apply {
-                setDataSource(this@AlarmService, this@play)
-                setAudioAttributes(audioAttributes)
-                prepareAsync()
-                setOnPreparedListener { start() }
-            }
-        } catch (_: IOException) {
-        }
+            mediaPlayer =
+                MediaPlayer().apply {
+                    setDataSource(this@AlarmService, this@play)
+                    setAudioAttributes(audioAttributes)
+                    prepareAsync()
+                    setOnPreparedListener { start() }
+                }
+        } catch (_: IOException) {}
     }
 
-    private fun getPlantPendingIntent(
-        plantId: Long,
-    ) = TaskStackBuilder.create(this).run {
-        val deeplinkIntent = Intent(
-            Intent.ACTION_VIEW,
-            Destination.PlantDetails.createDeeplink(plantId),
-        ).apply {
-            putExtra(ALARM_SERVICE_ARG, true)
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+    private fun getPlantPendingIntent(plantId: Long) =
+        TaskStackBuilder.create(this).run {
+            val deeplinkIntent =
+                Intent(Intent.ACTION_VIEW, Destination.PlantDetails.createDeeplink(plantId)).apply {
+                    putExtra(ALARM_SERVICE_ARG, true)
+                    flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                }
+            val stopService = StopPlantServiceActivity.getIntent(this@AlarmService)
+            addNextIntentWithParentStack(deeplinkIntent)
+            addNextIntent(stopService)
+            getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
         }
-        val stopService = StopPlantServiceActivity.getIntent(this@AlarmService)
-        addNextIntentWithParentStack(deeplinkIntent)
-        addNextIntent(stopService)
-        getPendingIntent(0, PendingIntent.FLAG_IMMUTABLE)
-    }
 
     override fun onDestroy() {
         wakeLock.release()

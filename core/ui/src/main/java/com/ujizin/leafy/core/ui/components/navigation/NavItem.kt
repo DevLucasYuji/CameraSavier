@@ -8,11 +8,8 @@ import com.ujizin.leafy.core.ui.components.navigation.drawer.DrawerItem
  * NavItem is used for components that needs to be navigated to one destination.
  *
  * Used in [BottomNavItem] & [DrawerItem].
- *
- * */
+ */
 interface NavItem {
-    /**
-     * Item destination.
-     * */
+    /** Item destination. */
     val destination: Destination
 }

@@ -10,13 +10,14 @@ class FakeLoadPlant(
     private val plants: List<Plant> = (0..until).map { createPlant(id = it + 1L) },
 ) : LoadPlantUseCase {
 
-    override fun invoke(id: Long) = flow<Result<Plant?>> {
-        val result = plants.find { it.id == id }?.let {
-            Result.Success(it)
-        } ?: Result.Error(Exception("Plant with id: $id not found"))
+    override fun invoke(id: Long) =
+        flow<Result<Plant?>> {
+            val result =
+                plants.find { it.id == id }?.let { Result.Success(it) }
+                    ?: Result.Error(Exception("Plant with id: $id not found"))
 
-        emit(result)
-    }
+            emit(result)
+        }
 
     companion object {
         private fun createPlant(

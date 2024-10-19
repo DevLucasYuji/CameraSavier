@@ -12,9 +12,6 @@ import androidx.room.PrimaryKey
  */
 @Entity(tableName = "album")
 data class AlbumEntity(
-    @ColumnInfo(name = "album_id")
-    @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
-    @ColumnInfo(name = "album_title")
-    val title: String,
+    @ColumnInfo(name = "album_id") @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    @ColumnInfo(name = "album_title") val title: String,
 )

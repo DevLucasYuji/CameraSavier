@@ -9,19 +9,18 @@ import com.ujizin.leafy.domain.model.User.Settings
 import java.util.Locale
 
 private val DefaultLanguage
-    get() = when (Locale.getDefault().language) {
-        "pt" -> PT
-        else -> EN
-    }
+    get() =
+        when (Locale.getDefault().language) {
+            "pt" -> PT
+            else -> EN
+        }
 
 private val DefaultUser: User
-    get() = User(
-        nickname = "User",
-        settings = Settings(
-            theme = Theme.System,
-            language = DefaultLanguage,
-            dynamicColor = true,
-        ),
-    )
+    get() =
+        User(
+            nickname = "User",
+            settings =
+                Settings(theme = Theme.System, language = DefaultLanguage, dynamicColor = true),
+        )
 
 val LocalUser = compositionLocalOf { DefaultUser }

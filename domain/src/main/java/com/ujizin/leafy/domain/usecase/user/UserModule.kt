@@ -17,13 +17,11 @@ object UserModule {
 
     @Provides
     @Singleton
-    fun provideLoadUser(
-        repository: UserRepository,
-    ): LoadUserUseCase = LoadUserUseCaseImpl(repository)
+    fun provideLoadUser(repository: UserRepository): LoadUserUseCase =
+        LoadUserUseCaseImpl(repository)
 
     @Provides
     @Singleton
-    fun provideUpdateUser(
-        repository: UserRepository,
-    ): UpdateUserUseCase = UpdateUserUseCaseImpl(repository)
+    fun provideUpdateUser(repository: UserRepository): UpdateUserUseCase =
+        UpdateUserUseCaseImpl(repository)
 }

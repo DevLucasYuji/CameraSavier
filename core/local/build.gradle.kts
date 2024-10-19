@@ -1,23 +1,9 @@
 plugins {
-    alias(libs.plugins.android.library)
-    alias(libs.plugins.kotlin.android)
+    id("com.ujizin.android-library")
     alias(libs.plugins.kotlinx.serialization)
-    alias(libs.plugins.ksp)
 }
 
-apply(from = "../../config-android.gradle")
-
-android {
-    namespace = "com.ujizin.leafy.data.local"
-
-    defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    testOptions {
-        unitTests.isReturnDefaultValues = true
-    }
-}
+android { namespace = "com.ujizin.leafy.data.local" }
 
 dependencies {
     implementation(libs.bundles.datastore)

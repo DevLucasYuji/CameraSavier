@@ -54,17 +54,11 @@ internal fun PlantDetailsContent(
                     )
                 },
             )
-        },
+        }
     ) {
-        Column(
-            Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState()),
-        ) {
+        Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState())) {
             CardImage(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .aspectRatio(1F),
+                modifier = Modifier.fillMaxWidth().aspectRatio(1F),
                 animation = Animation.SlideToTop,
                 data = plant.filePath,
                 elevation = 0.dp,
@@ -72,12 +66,12 @@ internal fun PlantDetailsContent(
                 contentDescription = plant.title,
             )
             PlantColumn(
-                modifier = Modifier
-                    .absoluteOffset(y = (-24).dp)
-                    .background(
-                        MaterialTheme.colorScheme.background,
-                        RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
-                    ),
+                modifier =
+                    Modifier.absoluteOffset(y = (-24).dp)
+                        .background(
+                            MaterialTheme.colorScheme.background,
+                            RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
+                        ),
                 plant = plant,
                 alarms = alarms,
                 onAlarmChanged = onAlarmChanged,
@@ -97,18 +91,14 @@ fun PlantColumn(
 ) {
     Column(modifier = modifier) {
         PlantContent(
-            modifier = Modifier
-                .fillMaxWidth()
-                .paddingScreen(vertical = 24.dp),
+            modifier = Modifier.fillMaxWidth().paddingScreen(vertical = 24.dp),
             title = plant.title.capitalize(),
             onSharedClick = { onSharedClick(plant) },
             description = plant.description.capitalize(),
         )
         HorizontalDivider(modifier = Modifier.paddingScreen())
         PlantAlarmsContent(
-            modifier = Modifier
-                .fillMaxWidth()
-                .paddingScreen(vertical = 32.dp),
+            modifier = Modifier.fillMaxWidth().paddingScreen(vertical = 32.dp),
             alarms = alarms,
             onAlarmChanged = onAlarmChanged,
         )

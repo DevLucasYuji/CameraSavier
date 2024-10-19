@@ -30,13 +30,10 @@ internal fun <T : Any> MultiModalSelector(
     values: List<ModalValue<T>>,
     onValuesSelected: (List<ModalValue<T>>) -> Unit,
 ) {
-    val selectedValues = remember(currentValues) {
-        mutableStateListOf(*currentValues.toTypedArray())
-    }
+    val selectedValues =
+        remember(currentValues) { mutableStateListOf(*currentValues.toTypedArray()) }
 
-    Column(
-        modifier = modifier,
-    ) {
+    Column(modifier = modifier) {
         Text(
             modifier = Modifier.padding(horizontal = 20.dp),
             text = title.capitalize(),
@@ -46,23 +43,17 @@ internal fun <T : Any> MultiModalSelector(
         LazyColumn {
             items(values) { item ->
                 ModalItemSelector(
-                    Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp, vertical = 16.dp),
+                    Modifier.fillMaxWidth().padding(horizontal = 20.dp, vertical = 16.dp),
                     text = item.name.capitalize(),
                     selected = selectedValues.contains(item),
                     onItemSelectorClicked = {
-                        with(selectedValues) {
-                            if (contains(item)) remove(item) else add(item)
-                        }
+                        with(selectedValues) { if (contains(item)) remove(item) else add(item) }
                     },
                 )
             }
         }
         Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .paddingScreen(vertical = 16.dp),
+            modifier = Modifier.fillMaxWidth().paddingScreen(vertical = 16.dp),
             text = stringResource(R.string.save),
             enabled = selectedValues.isNotEmpty(),
             onClick = { onValuesSelected(selectedValues) },

@@ -21,11 +21,7 @@ import com.ujizin.leafy.core.ui.extensions.Content
 @Composable
 fun Section(
     modifier: Modifier = Modifier,
-    headerPaddingValues: PaddingValues = PaddingValues(
-        top = 24.dp,
-        start = 20.dp,
-        end = 20.dp,
-    ),
+    headerPaddingValues: PaddingValues = PaddingValues(top = 24.dp, start = 20.dp, end = 20.dp),
     title: String,
     subTitle: String = "",
     trailingIcon: @Composable Content? = null,
@@ -58,10 +54,11 @@ private fun HeaderSection(
     subTitle: String,
     headerAnimation: Animation,
 ) {
-    val paddingTop by animateDpAsState(
-        targetValue = if (trailingIcon != null || leadingIcon != null) 12.dp else 0.dp,
-        label = "header-padding",
-    )
+    val paddingTop by
+        animateDpAsState(
+            targetValue = if (trailingIcon != null || leadingIcon != null) 12.dp else 0.dp,
+            label = "header-padding",
+        )
     Column(modifier) {
         Toolbar(trailingIcon = trailingIcon, leadingIcon = leadingIcon)
 

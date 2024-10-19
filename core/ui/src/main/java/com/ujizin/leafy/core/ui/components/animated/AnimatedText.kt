@@ -39,7 +39,5 @@ fun AnimatedText(
 @Preview
 @Composable
 private fun PreviewTitle() {
-    LeafyTheme {
-        AnimatedText(text = "Hello Lucas")
-    }
+    LeafyTheme { AnimatedText(text = "Hello Lucas") }
 }

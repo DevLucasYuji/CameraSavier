@@ -32,10 +32,7 @@ class MainActivity : AppCompatActivity() {
                     onFinish = ::finish,
                 )
 
-                LeafyNavigation(
-                    navController = navController,
-                    drawerState = drawerState,
-                )
+                LeafyNavigation(navController = navController, drawerState = drawerState)
             }
         }
     }

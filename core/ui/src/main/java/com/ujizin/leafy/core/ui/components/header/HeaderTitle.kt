@@ -45,21 +45,12 @@ fun HeaderTitle(
 @Composable
 private fun PreviewHeaderTitleWithSubtitle() {
     LeafyTheme {
-        HeaderTitle(
-            title = "Hi Lucas",
-            subTitle = "Welcome back!",
-            animation = Animation.None,
-        )
+        HeaderTitle(title = "Hi Lucas", subTitle = "Welcome back!", animation = Animation.None)
     }
 }
 
 @Preview("Header Title")
 @Composable
 private fun PreviewHeaderTitle() {
-    LeafyTheme {
-        HeaderTitle(
-            title = "Hi Lucas",
-            animation = Animation.None,
-        )
-    }
+    LeafyTheme { HeaderTitle(title = "Hi Lucas", animation = Animation.None) }
 }

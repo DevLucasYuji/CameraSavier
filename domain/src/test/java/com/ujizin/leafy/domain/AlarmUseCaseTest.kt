@@ -28,11 +28,9 @@ import org.junit.Test
 
 class AlarmUseCaseTest {
 
-    @get:Rule
-    var mainCoroutineRule = TestDispatcherRule()
+    @get:Rule var mainCoroutineRule = TestDispatcherRule()
 
-    @MockK
-    private lateinit var alarmRepository: AlarmRepository
+    @MockK private lateinit var alarmRepository: AlarmRepository
 
     private lateinit var loadAlarmUseCase: LoadAlarmUseCase
     private lateinit var loadAlarmsUseCase: LoadAlarmsUseCase
@@ -129,8 +127,7 @@ class AlarmUseCaseTest {
     }
 
     companion object {
-        private val alarmList = List(10) {
-            Alarm(it.toLong(), it.toLong(), "ring", it, true, it, listOf())
-        }
+        private val alarmList =
+            List(10) { Alarm(it.toLong(), it.toLong(), "ring", it, true, it, listOf()) }
     }
 }

@@ -11,17 +11,8 @@ import com.ujizin.leafy.core.local.model.AlarmEntity
 import com.ujizin.leafy.core.local.model.AlbumEntity
 import com.ujizin.leafy.core.local.model.PlantEntity
 
-/**
- * Memory database
- * */
-@Database(
-    entities = [
-        PlantEntity::class,
-        AlarmEntity::class,
-        AlbumEntity::class,
-    ],
-    version = 1,
-)
+/** Memory database */
+@Database(entities = [PlantEntity::class, AlarmEntity::class, AlbumEntity::class], version = 1)
 @TypeConverters(Converter::class)
 abstract class MemoryDatabase : RoomDatabase() {
 

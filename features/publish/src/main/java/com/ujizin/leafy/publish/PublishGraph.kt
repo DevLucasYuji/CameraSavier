@@ -19,9 +19,6 @@ fun NavGraphBuilder.publishGraph(
         enterTransition = enterTransition,
         exitTransition = exitTransition,
     ) {
-        PublishRoute(
-            onBackPressed = onBackPressed,
-            onFinishPublish = onNextClick,
-        )
+        PublishRoute(onBackPressed = onBackPressed, onFinishPublish = onNextClick)
     }
 }

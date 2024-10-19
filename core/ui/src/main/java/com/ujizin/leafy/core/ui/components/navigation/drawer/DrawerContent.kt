@@ -34,9 +34,7 @@ internal fun DrawerContent(
     ModalDrawerSheet(modifier) {
         Column(Modifier.padding(horizontal = 12.dp, vertical = 32.dp)) {
             HeaderTitle(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable(onClick = onUserClick),
+                modifier = Modifier.fillMaxWidth().clickable(onClick = onUserClick),
                 title = LocalUser.current.nickname,
                 subTitle = stringResource(R.string.edit_name).capitalize(),
             )
@@ -72,9 +70,7 @@ private fun DrawerItems(
             },
             label = { Text(text = stringResource(id = item.labelRes).capitalize()) },
             selected = isSelected,
-            onClick = {
-                if (isSelected) onCloseDrawer() else onDrawerClicked(item)
-            },
+            onClick = { if (isSelected) onCloseDrawer() else onDrawerClicked(item) },
         )
     }
 }

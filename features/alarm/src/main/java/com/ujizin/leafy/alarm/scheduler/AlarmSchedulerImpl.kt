@@ -34,7 +34,7 @@ internal class AlarmSchedulerImpl(private val context: Context) : AlarmScheduler
      * @param hours the alarm's hours
      * @param minutes the alarm's minutes
      * @param ringtoneUri the alarm's ringtone uri
-     * */
+     */
     private fun setAlarm(
         type: Int,
         dayOfWeek: Int,
@@ -57,18 +57,15 @@ internal class AlarmSchedulerImpl(private val context: Context) : AlarmScheduler
      *
      * @param hours the timer's hours
      * @param minutes the timer's minutes
-     * */
-    private fun getTimeInMillis(
-        dayOfWeek: Int,
-        hours: Int,
-        minutes: Int,
-    ): Long = with(Calendar.getInstance()) {
-        set(Calendar.HOUR_OF_DAY, hours)
-        set(Calendar.MINUTE, minutes)
-        setDay(dayOfWeek, hours, minutes)
+     */
+    private fun getTimeInMillis(dayOfWeek: Int, hours: Int, minutes: Int): Long =
+        with(Calendar.getInstance()) {
+            set(Calendar.HOUR_OF_DAY, hours)
+            set(Calendar.MINUTE, minutes)
+            setDay(dayOfWeek, hours, minutes)
 
-        return@with timeInMillis
-    }
+            return@with timeInMillis
+        }
 
     private fun Calendar.setDay(dayOfWeek: Int, hours: Int, minutes: Int) {
         val currentDayOfWeek = get(Calendar.DAY_OF_WEEK)
@@ -90,19 +87,20 @@ internal class AlarmSchedulerImpl(private val context: Context) : AlarmScheduler
      * Create pending intent for alarm
      *
      * @param ringtoneUri the alarm's ringtone
-     * */
+     */
     private fun createPendingIntent(
         ringtoneUri: Uri = Uri.EMPTY,
         requestCode: Int = 0,
         bundle: Bundle = Bundle.EMPTY,
-    ): PendingIntent = PendingIntent.getBroadcast(
-        context,
-        requestCode,
-        Intent(context, AlarmReceiver::class.java).apply {
-            action = AlarmReceiver.SCHEDULE_ALARM_ACTION
-            putExtra(AlarmReceiver.RINGTONE_CONTENT_EXTRA, ringtoneUri.toString())
-            putExtras(bundle)
-        },
-        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
-    )
+    ): PendingIntent =
+        PendingIntent.getBroadcast(
+            context,
+            requestCode,
+            Intent(context, AlarmReceiver::class.java).apply {
+                action = AlarmReceiver.SCHEDULE_ALARM_ACTION
+                putExtra(AlarmReceiver.RINGTONE_CONTENT_EXTRA, ringtoneUri.toString())
+                putExtras(bundle)
+            },
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+        )
 }

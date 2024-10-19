@@ -24,34 +24,26 @@ fun PlantContent(
     onSharedClick: () -> Unit,
 ) {
     Column(modifier) {
-        Box(
-            modifier = Modifier.fillMaxWidth(),
-        ) {
+        Box(modifier = Modifier.fillMaxWidth()) {
             Text(
                 modifier = Modifier.padding(end = 16.dp),
                 text = title,
                 style = MaterialTheme.typography.titleMedium,
             )
             PlantActions(
-                modifier = Modifier
-                    .absoluteOffset(y = -(48.dp))
-                    .padding(end = 8.dp)
-                    .align(Alignment.TopEnd),
+                modifier =
+                    Modifier.absoluteOffset(y = -(48.dp))
+                        .padding(end = 8.dp)
+                        .align(Alignment.TopEnd),
                 onSharedClick = onSharedClick,
             )
         }
-        Text(
-            modifier = Modifier.padding(top = 16.dp),
-            text = description,
-        )
+        Text(modifier = Modifier.padding(top = 16.dp), text = description)
     }
 }
 
 @Composable
-private fun PlantActions(
-    modifier: Modifier = Modifier,
-    onSharedClick: () -> Unit,
-) {
+private fun PlantActions(modifier: Modifier = Modifier, onSharedClick: () -> Unit) {
     Row(modifier) {
         AnimatedButtonIcon(
             icon = Icons.Shared,
@@ -59,11 +51,11 @@ private fun PlantActions(
             onClick = onSharedClick,
             animation = Animation.SlideToTop,
         )
-//    AnimatedButtonIcon(
-//        icon = Icons.Favorite,
-//        size = 24.dp,
-//        onClick = { },
-//        animation = Animation.SlideToTop
-//    )
+        //    AnimatedButtonIcon(
+        //        icon = Icons.Favorite,
+        //        size = 24.dp,
+        //        onClick = { },
+        //        animation = Animation.SlideToTop
+        //    )
     }
 }

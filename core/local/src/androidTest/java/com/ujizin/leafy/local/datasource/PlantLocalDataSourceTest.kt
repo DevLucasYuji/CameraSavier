@@ -14,14 +14,15 @@ class PlantLocalDataSourceTest : BaseDatabaseTest() {
 
     private lateinit var plantDao: PlantDao
 
-    private val fakePlant = PlantEntity(
-        id = 1,
-        title = "fake-plant",
-        filePath = ":data//fake/path",
-        favorite = false,
-        description = "this is a fake plant",
-        albumId = null,
-    )
+    private val fakePlant =
+        PlantEntity(
+            id = 1,
+            title = "fake-plant",
+            filePath = ":data//fake/path",
+            favorite = false,
+            description = "this is a fake plant",
+            albumId = null,
+        )
 
     override fun setUp() {
         super.setUp()

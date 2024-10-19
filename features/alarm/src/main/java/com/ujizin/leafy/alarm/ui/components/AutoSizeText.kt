@@ -11,11 +11,7 @@ import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.text.TextStyle
 
 @Composable
-fun AutoSizeText(
-    modifier: Modifier = Modifier,
-    text: String,
-    textStyle: TextStyle,
-) {
+fun AutoSizeText(modifier: Modifier = Modifier, text: String, textStyle: TextStyle) {
     var scaledTextStyle by remember { mutableStateOf(textStyle) }
     var readyToDraw by remember { mutableStateOf(false) }
 
@@ -30,8 +26,7 @@ fun AutoSizeText(
         softWrap = false,
         onTextLayout = { textLayoutResult ->
             if (textLayoutResult.didOverflowWidth) {
-                scaledTextStyle =
-                    scaledTextStyle.copy(fontSize = scaledTextStyle.fontSize * 0.9)
+                scaledTextStyle = scaledTextStyle.copy(fontSize = scaledTextStyle.fontSize * 0.9)
             } else {
                 readyToDraw = true
             }

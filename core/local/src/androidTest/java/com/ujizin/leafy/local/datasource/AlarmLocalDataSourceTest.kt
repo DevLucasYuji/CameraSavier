@@ -14,45 +14,30 @@ class AlarmLocalDataSourceTest : BaseDatabaseTest() {
 
     private lateinit var alarmDao: AlarmDao
 
-    private val fakeAlarm = AlarmEntity(
-        id = 1,
-        ringtoneUriString = "alarm",
-        true,
-        1,
-        -1,
-        1,
-        listOf(),
-    )
+    private val fakeAlarm =
+        AlarmEntity(id = 1, ringtoneUriString = "alarm", true, 1, -1, 1, listOf())
 
-    private val fakePlant = PlantEntity(
-        id = 1,
-        title = "fake-plant",
-        filePath = ":data//fake/path",
-        favorite = false,
-        description = "this is a fake plant",
-        albumId = null,
-    )
+    private val fakePlant =
+        PlantEntity(
+            id = 1,
+            title = "fake-plant",
+            filePath = ":data//fake/path",
+            favorite = false,
+            description = "this is a fake plant",
+            albumId = null,
+        )
 
     override fun setUp() {
         super.setUp()
         alarmDao = db.alarmDao()
 
-        runTest {
-            db.plantDao().insert(fakePlant)
-        }
+        runTest { db.plantDao().insert(fakePlant) }
     }
 
     @Test
     fun writeAlarmsAndReadInList() = runTest {
-        val fakeAlarm2 = AlarmEntity(
-            id = 2,
-            ringtoneUriString = "alarm-2",
-            true,
-            1,
-            -1,
-            1,
-            listOf(),
-        )
+        val fakeAlarm2 =
+            AlarmEntity(id = 2, ringtoneUriString = "alarm-2", true, 1, -1, 1, listOf())
         val expectedAlarms = listOf(fakeAlarm, fakeAlarm2)
         expectedAlarms.forEach { alarmDao.insert(it) }
 
@@ -65,24 +50,10 @@ class AlarmLocalDataSourceTest : BaseDatabaseTest() {
     fun writeAlarmsAndFindByPlantId() = runTest {
         db.plantDao().insert(fakePlant.copy(id = 2))
 
-        val fakeAlarm2 = AlarmEntity(
-            id = 2,
-            ringtoneUriString = "alarm-2",
-            true,
-            2,
-            -1,
-            1,
-            listOf(),
-        )
-        val fakeAlarm3 = AlarmEntity(
-            id = 2,
-            ringtoneUriString = "alarm-3",
-            true,
-            1,
-            -1,
-            1,
-            listOf(),
-        )
+        val fakeAlarm2 =
+            AlarmEntity(id = 2, ringtoneUriString = "alarm-2", true, 2, -1, 1, listOf())
+        val fakeAlarm3 =
+            AlarmEntity(id = 2, ringtoneUriString = "alarm-3", true, 1, -1, 1, listOf())
 
         listOf(fakeAlarm, fakeAlarm2, fakeAlarm3).forEach { alarmDao.insert(it) }
 

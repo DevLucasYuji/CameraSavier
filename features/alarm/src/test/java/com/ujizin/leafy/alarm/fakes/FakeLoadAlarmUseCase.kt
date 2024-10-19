@@ -8,15 +8,14 @@ import kotlinx.coroutines.flow.flow
 
 class FakeLoadAlarmUseCase(
     private val until: Int = 10,
-    val alarms: MutableList<Alarm> = (0..until).map {
-        createAlarm(id = it + 1L, plantId = it + 1L)
-    }.toMutableList(),
+    val alarms: MutableList<Alarm> =
+        (0..until).map { createAlarm(id = it + 1L, plantId = it + 1L) }.toMutableList(),
 ) : LoadAlarmUseCase {
 
     override fun invoke(id: Long) = flow {
-        val result = alarms.find { it.id == id }?.let {
-            Result.Success(it)
-        } ?: Result.Error(Exception("Alarm with id: $id not found"))
+        val result =
+            alarms.find { it.id == id }?.let { Result.Success(it) }
+                ?: Result.Error(Exception("Alarm with id: $id not found"))
 
         emit(result)
     }

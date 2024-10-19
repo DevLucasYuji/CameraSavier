@@ -8,9 +8,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.ujizin.leafy.core.local.model.AlbumEntity
 
-/**
- * [Dao] class to handle with [AlbumEntity].
- * */
+/** [Dao] class to handle with [AlbumEntity]. */
 @Dao
 interface AlbumDao {
 
@@ -18,16 +16,15 @@ interface AlbumDao {
      * Get all [AlbumEntity].
      *
      * @return list of [AlbumEntity]
-     * */
-    @Query("SELECT * FROM album")
-    suspend fun getAll(): List<AlbumEntity>
+     */
+    @Query("SELECT * FROM album") suspend fun getAll(): List<AlbumEntity>
 
     /**
      * Find a list of [AlbumEntity] by album id
      *
      * @param albumId the album's id
      * @return list of [AlbumEntity]
-     * */
+     */
     @Query("SELECT * FROM album where album_id = :albumId")
     suspend fun findAlbumById(albumId: Long): AlbumEntity?
 
@@ -35,23 +32,20 @@ interface AlbumDao {
      * Insert a new [AlbumEntity].
      *
      * @param album [AlbumEntity] to be added
-     * */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(vararg album: AlbumEntity)
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE) suspend fun insert(vararg album: AlbumEntity)
 
     /**
      * Update [AlbumEntity] passed on parameter.
      *
      * @param album [AlbumEntity] to be updated
-     * */
-    @Update
-    suspend fun update(album: AlbumEntity)
+     */
+    @Update suspend fun update(album: AlbumEntity)
 
     /**
      * Delete [AlbumEntity] passed on parameter.
      *
      * @param album [AlbumEntity] to be Deleted
-     * */
-    @Delete
-    suspend fun delete(album: AlbumEntity)
+     */
+    @Delete suspend fun delete(album: AlbumEntity)
 }

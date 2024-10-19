@@ -14,13 +14,14 @@ data class UserStore(
     companion object {
         private const val DEFAULT_NICKNAME = "User"
 
-        fun default() = UserStore(
-            nickname = DEFAULT_NICKNAME,
-            theme = null,
-            language = "EN",
-            dynamicColor = true,
-            createdAt = " ",
-        )
+        fun default() =
+            UserStore(
+                nickname = DEFAULT_NICKNAME,
+                theme = null,
+                language = "EN",
+                dynamicColor = true,
+                createdAt = " ",
+            )
     }
 }
 

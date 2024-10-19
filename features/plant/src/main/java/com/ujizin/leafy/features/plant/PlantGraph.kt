@@ -21,20 +21,11 @@ fun NavGraphBuilder.plantGraph(
     composable<PlantDetails>(
         enterTransition = enterTransition,
         exitTransition = exitTransition,
-        deepLinks = listOf(
-            navDeepLink<PlantDetails>(basePath = PlantDetails.DEEPLINK_URL),
-        ),
+        deepLinks = listOf(navDeepLink<PlantDetails>(basePath = PlantDetails.DEEPLINK_URL)),
     ) {
-        PlantDetailsRoute(
-            onBackPressed = onBackPressed,
-        )
+        PlantDetailsRoute(onBackPressed = onBackPressed)
     }
-    composable<PlantEdit>(
-        enterTransition = enterTransition,
-        exitTransition = exitTransition,
-    ) {
-        PlantEditRoute(
-            onBackPressed = onBackPressed,
-        )
+    composable<PlantEdit>(enterTransition = enterTransition, exitTransition = exitTransition) {
+        PlantEditRoute(onBackPressed = onBackPressed)
     }
 }

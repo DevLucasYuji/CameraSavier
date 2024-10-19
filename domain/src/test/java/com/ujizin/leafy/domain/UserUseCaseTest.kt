@@ -24,11 +24,9 @@ import org.junit.Test
 
 class UserUseCaseTest {
 
-    @get:Rule
-    var mainDispatcherRule = TestDispatcherRule()
+    @get:Rule var mainDispatcherRule = TestDispatcherRule()
 
-    @MockK
-    lateinit var userRepository: UserRepository
+    @MockK lateinit var userRepository: UserRepository
 
     private lateinit var loadUserUseCase: LoadUserUseCase
 
@@ -67,9 +65,7 @@ class UserUseCaseTest {
     }
 
     companion object {
-        private val user = User(
-            nickname = "nickname",
-            settings = User.Settings(Theme.Dark, Language.EN, true),
-        )
+        private val user =
+            User(nickname = "nickname", settings = User.Settings(Theme.Dark, Language.EN, true))
     }
 }

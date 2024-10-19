@@ -8,8 +8,7 @@ import javax.inject.Inject
 @HiltAndroidApp
 class LeafyApplication : Application() {
 
-    @Inject
-    lateinit var alarmNotificator: AlarmNotificator
+    @Inject lateinit var alarmNotificator: AlarmNotificator
 
     override fun onCreate() {
         super.onCreate()

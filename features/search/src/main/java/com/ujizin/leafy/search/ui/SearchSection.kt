@@ -89,9 +89,7 @@ private fun SearchContent(
     ) {
         item {
             Section(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .paddingScreen(),
+                modifier = Modifier.fillMaxWidth().paddingScreen(),
                 headerPaddingValues = PaddingValues(top = 32.dp),
                 leadingIcon = if (!isKeyboardOpen) leadingIcon(onDrawerClick) else null,
                 title = stringResource(R.string.search).capitalize(),
@@ -100,11 +98,11 @@ private fun SearchContent(
 
         stickyHeader {
             TextField(
-                modifier = Modifier
-                    .background(MaterialTheme.colorScheme.background)
-                    .fillMaxWidth()
-                    .paddingScreen(vertical = 16.dp)
-                    .focusRequester(focusRequester),
+                modifier =
+                    Modifier.background(MaterialTheme.colorScheme.background)
+                        .fillMaxWidth()
+                        .paddingScreen(vertical = 16.dp)
+                        .focusRequester(focusRequester),
                 placeholder = { SearchPlaceholder() },
                 value = searchText,
                 onValueChange = onSearchTextChanged,
@@ -112,37 +110,32 @@ private fun SearchContent(
         }
 
         when (val result: SearchUiState = uiState) {
-            is SearchUiState.Initial -> item {
-                SearchLoading(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp),
-                    autoFocus = result.autoFocus,
-                    focusRequester = focusRequester,
-                )
-            }
+            is SearchUiState.Initial ->
+                item {
+                    SearchLoading(
+                        modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                        autoFocus = result.autoFocus,
+                        focusRequester = focusRequester,
+                    )
+                }
 
-            SearchUiState.Empty -> item {
-                SearchEmptyList(
-                    modifier = Modifier
-                        .padding(20.dp)
-                        .fillMaxWidth(),
-                    searchText = searchText,
-                    onTakePictureClick = onTakePictureClick,
-                )
-            }
+            SearchUiState.Empty ->
+                item {
+                    SearchEmptyList(
+                        modifier = Modifier.padding(20.dp).fillMaxWidth(),
+                        searchText = searchText,
+                        onTakePictureClick = onTakePictureClick,
+                    )
+                }
 
-            is SearchUiState.Loaded -> searchItems(
-                modifier = Modifier
-                    .paddingScreen(vertical = 8.dp)
-                    .fillMaxWidth()
-                    .aspectRatio(1F),
-                data = result.items,
-                onPlantClick = onPlantClick,
-                onSharedClick = { plant ->
-                    plant.share(context)
-                },
-            )
+            is SearchUiState.Loaded ->
+                searchItems(
+                    modifier =
+                        Modifier.paddingScreen(vertical = 8.dp).fillMaxWidth().aspectRatio(1F),
+                    data = result.items,
+                    onPlantClick = onPlantClick,
+                    onSharedClick = { plant -> plant.share(context) },
+                )
         }
         item { Spacer(Modifier.padding(64.dp)) }
     }
@@ -164,8 +157,8 @@ private fun SearchPreview() {
             SearchContent(
                 uiState = SearchUiState.Empty,
                 isKeyboardOpen = false,
-                onDrawerClick = { },
-                onTakePictureClick = { },
+                onDrawerClick = {},
+                onTakePictureClick = {},
                 searchText = "",
                 focusRequester = remember { FocusRequester() },
                 onSearchTextChanged = {},

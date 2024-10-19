@@ -15,9 +15,7 @@ import com.ujizin.leafy.user.rememberUserState
 import com.ujizin.leafy.user.setLanguage
 
 @Composable
-fun AppCompatActivity.AppConfiguration(
-    content: @Composable Content,
-) {
+fun AppCompatActivity.AppConfiguration(content: @Composable Content) {
     val userState by rememberUserState()
     when (val state: MainUiState = userState) {
         is MainUiState.Initialized -> {

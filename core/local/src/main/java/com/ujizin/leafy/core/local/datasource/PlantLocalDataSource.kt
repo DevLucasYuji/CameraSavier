@@ -33,14 +33,15 @@ internal class PlantLocalDataSource(
         plantDao.delete(mapper.toPlantEntity(plant))
     }
 
-    override suspend fun updateDraftPlant(plant: Plant) = with(memoryPlantDao) {
-        val plantEntity = mapper.toPlantEntity(plant)
-        val hasPlant = getById(plantEntity.id) != null
-        when {
-            hasPlant -> update(plantEntity)
-            else -> insert(plantEntity)
+    override suspend fun updateDraftPlant(plant: Plant) =
+        with(memoryPlantDao) {
+            val plantEntity = mapper.toPlantEntity(plant)
+            val hasPlant = getById(plantEntity.id) != null
+            when {
+                hasPlant -> update(plantEntity)
+                else -> insert(plantEntity)
+            }
         }
-    }
 
     override suspend fun findPlantBySentence(sentence: String): List<Plant> {
         return plantDao.findBySentence(sentence).map(mapper::toPlant)

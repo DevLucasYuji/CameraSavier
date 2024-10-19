@@ -9,10 +9,7 @@ import androidx.compose.ui.Modifier
 
 @Composable
 internal fun PlantDetailsLoading() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center,
-    ) {
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         CircularProgressIndicator()
     }
 }

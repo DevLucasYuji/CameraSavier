@@ -37,22 +37,17 @@ fun CardImage(
     innerContent: @Composable Content = {},
 ) {
     val context = LocalContext.current
-    val model = remember(data) {
-        ImageRequest.Builder(context)
-            .data(data)
-            .size(Size.ORIGINAL)
-            .crossfade(true)
-            .build()
-    }
+    val model =
+        remember(data) {
+            ImageRequest.Builder(context).data(data).size(Size.ORIGINAL).crossfade(true).build()
+        }
     val painter = rememberAsyncImagePainter(model = model)
 
-    val alphaAnimated by animateFloatAsState(
-        targetValue = if (painter.state is AsyncImagePainter.State.Success) 1F else 0F,
-    )
-    Animated(
-        modifier = Modifier.alpha(alphaAnimated),
-        animation = animation,
-    ) {
+    val alphaAnimated by
+        animateFloatAsState(
+            targetValue = if (painter.state is AsyncImagePainter.State.Success) 1F else 0F
+        )
+    Animated(modifier = Modifier.alpha(alphaAnimated), animation = animation) {
         Card(
             modifier = modifier,
             elevation = CardDefaults.cardElevation(defaultElevation = elevation),
@@ -64,7 +59,9 @@ fun CardImage(
                 painter = painter,
                 contentDescription = contentDescription,
                 contentAlignment = Alignment.BottomStart,
-            ) { innerContent() }
+            ) {
+                innerContent()
+            }
         }
     }
 }

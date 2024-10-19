@@ -6,9 +6,8 @@ import com.ujizin.leafy.domain.result.Result
 import com.ujizin.leafy.domain.result.asResult
 import kotlinx.coroutines.flow.Flow
 
-internal class LoadAllPlantUseCaseImpl(
-    private val repository: PlantRepository,
-) : LoadAllPlantUseCase {
+internal class LoadAllPlantUseCaseImpl(private val repository: PlantRepository) :
+    LoadAllPlantUseCase {
 
     override fun invoke(): Flow<Result<List<Plant>>> = repository.getPlants().asResult()
 }

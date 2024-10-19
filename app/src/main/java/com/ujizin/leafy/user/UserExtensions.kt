@@ -11,13 +11,9 @@ import java.util.Locale
 
 fun AppCompatActivity.setLanguage(language: Language) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        getSystemService(LocaleManager::class.java)
-            .applicationLocales = LocaleList(
-            Locale.forLanguageTag(language.tag),
-        )
+        getSystemService(LocaleManager::class.java).applicationLocales =
+            LocaleList(Locale.forLanguageTag(language.tag))
     } else {
-        AppCompatDelegate.setApplicationLocales(
-            LocaleListCompat.forLanguageTags(language.tag),
-        )
+        AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(language.tag))
     }
 }

@@ -22,14 +22,15 @@ internal fun CameraDenied(
     onBackPressed: () -> Unit,
     onCameraRequest: OnClick,
 ) {
-    val descriptionRes by remember(shouldShowRationale) {
-        mutableIntStateOf(
-            when {
-                shouldShowRationale -> R.string.camera_permission_description
-                else -> R.string.camera_permission_denied_description
-            },
-        )
-    }
+    val descriptionRes by
+        remember(shouldShowRationale) {
+            mutableIntStateOf(
+                when {
+                    shouldShowRationale -> R.string.camera_permission_description
+                    else -> R.string.camera_permission_denied_description
+                }
+            )
+        }
     AnimatedButtonIcon(
         modifier = Modifier.paddingScreen(vertical = 24.dp),
         icon = Icons.Back,

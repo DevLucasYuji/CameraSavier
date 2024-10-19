@@ -16,9 +16,7 @@ import com.google.android.play.core.review.ReviewManager
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.ujizin.leafy.core.ui.extensions.openAppInPlayStore
 
-/**
- * Prepare google review feature in a state,
- * */
+/** Prepare google review feature in a state, */
 @Stable
 class GoogleReviewState(
     private val reviewManager: ReviewManager,
@@ -30,20 +28,19 @@ class GoogleReviewState(
         val activity = context.getActivity() ?: return context.openAppInPlayStore()
         when {
             redirectToPlayStore -> context.openAppInPlayStore()
-            else -> reviewInfo?.let {
-                val reviewFlow = reviewManager.launchReviewFlow(activity, reviewInfo)
-                if (reviewFlow.isComplete) context.openAppInPlayStore()
-                reviewFlow.addOnCompleteListener { redirectToPlayStore = true }
-            }
+            else ->
+                reviewInfo?.let {
+                    val reviewFlow = reviewManager.launchReviewFlow(activity, reviewInfo)
+                    if (reviewFlow.isComplete) context.openAppInPlayStore()
+                    reviewFlow.addOnCompleteListener { redirectToPlayStore = true }
+                }
         }
     }
 }
 
 @Composable
 private fun rememberReviewTask(reviewManager: ReviewManager, onError: () -> Unit): ReviewInfo? {
-    var reviewInfo: ReviewInfo? by remember {
-        mutableStateOf(null)
-    }
+    var reviewInfo: ReviewInfo? by remember { mutableStateOf(null) }
 
     LaunchedEffect(Unit) {
         reviewManager.requestReviewFlow().addOnCompleteListener {
@@ -58,28 +55,23 @@ private fun rememberReviewTask(reviewManager: ReviewManager, onError: () -> Unit
 fun rememberGoogleReview(): GoogleReviewState {
     val context = LocalContext.current
     var redirectToPlayStore by remember { mutableStateOf(false) }
-    val reviewManager = remember {
-        ReviewManagerFactory.create(context)
-    }
+    val reviewManager = remember { ReviewManagerFactory.create(context) }
 
-    val reviewInfo = rememberReviewTask(
-        reviewManager = reviewManager,
-        onError = { redirectToPlayStore = true },
-    )
+    val reviewInfo =
+        rememberReviewTask(reviewManager = reviewManager, onError = { redirectToPlayStore = true })
 
-    val googleReviewState = remember(reviewManager, reviewInfo, redirectToPlayStore) {
-        GoogleReviewState(reviewManager, reviewInfo, redirectToPlayStore)
-    }
+    val googleReviewState =
+        remember(reviewManager, reviewInfo, redirectToPlayStore) {
+            GoogleReviewState(reviewManager, reviewInfo, redirectToPlayStore)
+        }
 
     return googleReviewState
 }
 
-/**
- * Get activity recursively
- * based on: https://stackoverflow.com/a/68423182/11903815
- * */
-fun Context.getActivity(): ComponentActivity? = when (this) {
-    is ComponentActivity -> this
-    is ContextWrapper -> baseContext.getActivity()
-    else -> null
-}
+/** Get activity recursively based on: https://stackoverflow.com/a/68423182/11903815 */
+fun Context.getActivity(): ComponentActivity? =
+    when (this) {
+        is ComponentActivity -> this
+        is ContextWrapper -> baseContext.getActivity()
+        else -> null
+    }

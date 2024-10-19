@@ -15,22 +15,25 @@ import com.ujizin.leafy.core.ui.extensions.launchCatching
 import com.ujizin.leafy.domain.usecase.file.save.SaveFileUseCase
 import com.ujizin.leafy.domain.usecase.plant.add.AddDraftPlantUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.io.ByteArrayOutputStream
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.update
-import java.io.ByteArrayOutputStream
-import javax.inject.Inject
 
 @HiltViewModel
-class CameraViewModel @Inject constructor(
+class CameraViewModel
+@Inject
+constructor(
     private val saveFile: SaveFileUseCase,
     private val addDraftPlant: AddDraftPlantUseCase,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<CameraUiState>(CameraUiState.Initial)
-    val uiState: StateFlow<CameraUiState> get() = _uiState
+    val uiState: StateFlow<CameraUiState>
+        get() = _uiState
 
     fun takePicture(cameraState: CameraState) {
         viewModelScope.launchCatching({ _, exception ->
@@ -51,22 +54,13 @@ class CameraViewModel @Inject constructor(
         _uiState.update { CameraUiState.Initial }
     }
 
-    fun saveImage(
-        context: Context,
-        bitmap: Bitmap,
-        onImageSaved: () -> Unit,
-    ) {
-        addDraftPlant(
-            file = saveFile(context.cacheDir, bitmap, "jpg"),
-        ).onCompletion {
-            onImageSaved()
-        }.launchIn(viewModelScope)
+    fun saveImage(context: Context, bitmap: Bitmap, onImageSaved: () -> Unit) {
+        addDraftPlant(file = saveFile(context.cacheDir, bitmap, "jpg"))
+            .onCompletion { onImageSaved() }
+            .launchIn(viewModelScope)
     }
 
-    fun preparePreview(
-        contentResolver: ContentResolver,
-        uri: Uri,
-    ) {
+    fun preparePreview(contentResolver: ContentResolver, uri: Uri) {
         val inputStream = contentResolver.openInputStream(uri)
         val bitmap = BitmapFactory.decodeStream(inputStream)
 
@@ -78,6 +72,8 @@ class CameraViewModel @Inject constructor(
 
 sealed interface CameraUiState {
     data object Initial : CameraUiState
+
     data class Preview(val bitmap: Bitmap) : CameraUiState
+
     data class Error(val message: String) : CameraUiState
 }

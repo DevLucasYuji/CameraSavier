@@ -1,6 +1,6 @@
 package com.ujizin.leafy.core.repository.model
 
-/***
+/**
  * Contract Plant Model to PlantDataSource.
  *
  * @param id the plant id

@@ -21,19 +21,20 @@ internal class AlarmNotificatorImpl(private val context: Context) : AlarmNotific
         fullScreenIntent: PendingIntent?,
         contentIntent: PendingIntent?,
         notificationActions: List<NotificationCompat.Action>,
-    ) = NotificationCompat.Builder(context, CHANNEL_ID)
-        .setSmallIcon(R.drawable.ic_notification_monochrome)
-        .setContentTitle(title)
-        .setContentText(description)
-        .setVibrate(vibrateValues)
-        .setOngoing(true)
-        .setAutoCancel(false)
-        .setPriority(NotificationCompat.PRIORITY_MAX)
-        .setCategory(NotificationCompat.CATEGORY_ALARM)
-        .setFullScreenIntent(fullScreenIntent, true)
-        .setContentIntent(contentIntent)
-        .apply { notificationActions.forEach(::addAction) }
-        .build()
+    ) =
+        NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_notification_monochrome)
+            .setContentTitle(title)
+            .setContentText(description)
+            .setVibrate(vibrateValues)
+            .setOngoing(true)
+            .setAutoCancel(false)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
+            .setCategory(NotificationCompat.CATEGORY_ALARM)
+            .setFullScreenIntent(fullScreenIntent, true)
+            .setContentIntent(contentIntent)
+            .apply { notificationActions.forEach(::addAction) }
+            .build()
 
     override fun cancelNotification(notificationId: Int) {
         notificationManagerCompat.cancel(notificationId)
@@ -44,11 +45,8 @@ internal class AlarmNotificatorImpl(private val context: Context) : AlarmNotific
             return
         }
 
-        val notificationChannel = NotificationChannel(
-            CHANNEL_ID,
-            CHANNEL_NAME,
-            NotificationManager.IMPORTANCE_HIGH,
-        )
+        val notificationChannel =
+            NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_HIGH)
 
         notificationManagerCompat.createNotificationChannel(notificationChannel)
     }

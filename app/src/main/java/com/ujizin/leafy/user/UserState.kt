@@ -11,9 +11,9 @@ import com.ujizin.leafy.domain.model.Theme
 import com.ujizin.leafy.domain.model.User
 
 @Composable
-fun rememberUserState(viewModel: MainViewModel = hiltViewModel()) = remember(viewModel) {
-    viewModel.load()
-}.collectAsStateWithLifecycle(initialValue = MainUiState.Loading)
+fun rememberUserState(viewModel: MainViewModel = hiltViewModel()) =
+    remember(viewModel) { viewModel.load() }
+        .collectAsStateWithLifecycle(initialValue = MainUiState.Loading)
 
 @Composable
 fun User.isUserInDarkTheme(): Boolean {

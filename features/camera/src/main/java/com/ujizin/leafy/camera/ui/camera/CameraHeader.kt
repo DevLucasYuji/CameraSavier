@@ -19,16 +19,10 @@ internal fun CameraHeader(
     onCloseClicked: OnClick,
 ) {
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 16.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 16.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        AnimatedButtonIcon(
-            size = 24.dp,
-            icon = Icons.Back,
-            onClick = onCloseClicked,
-        )
+        AnimatedButtonIcon(size = 24.dp, icon = Icons.Back, onClick = onCloseClicked)
         Box() {}
         Box() {}
     }

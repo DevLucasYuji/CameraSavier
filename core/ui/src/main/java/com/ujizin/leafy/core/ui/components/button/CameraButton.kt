@@ -30,21 +30,18 @@ internal fun CameraButton(
     iconAnimation: Animation = Animation.SlideToTop.copy(delayMillis = Animation.LARGE_DELAY),
     onClick: OnClick,
 ) {
-    Box(
-        modifier = modifier,
-        contentAlignment = Alignment.Center,
-    ) {
+    Box(modifier = modifier, contentAlignment = Alignment.Center) {
         Animated(animation = animation) {
             Box(
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .size(72.dp)
-                    .background(MaterialTheme.colorScheme.background, CircleShape)
-                    .clickable(
-                        indication = ripple(bounded = true),
-                        onClick = onClick,
-                        interactionSource = remember { MutableInteractionSource() },
-                    ),
+                modifier =
+                    Modifier.clip(CircleShape)
+                        .size(72.dp)
+                        .background(MaterialTheme.colorScheme.background, CircleShape)
+                        .clickable(
+                            indication = ripple(bounded = true),
+                            onClick = onClick,
+                            interactionSource = remember { MutableInteractionSource() },
+                        ),
                 contentAlignment = Alignment.Center,
             ) {
                 Animated(animation = iconAnimation) {
@@ -64,9 +61,6 @@ internal fun CameraButton(
 @Composable
 private fun PreviewCameraButton() {
     LeafyTheme(dynamicColor = false) {
-        CameraButton(
-            animation = Animation.None,
-            iconAnimation = Animation.None,
-        ) {}
+        CameraButton(animation = Animation.None, iconAnimation = Animation.None) {}
     }
 }

@@ -1,5 +1,6 @@
 package com.ujizin.leafy.core.navigation
 
+import androidx.compose.animation.AnimatedContentTransitionScope as TransitionScope
 import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
@@ -12,7 +13,6 @@ import androidx.navigation.NavDeepLink
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import androidx.compose.animation.AnimatedContentTransitionScope as TransitionScope
 
 typealias AnimatedEnterTransition = (TransitionScope<NavBackStackEntry>.() -> EnterTransition?)
 
@@ -41,6 +41,7 @@ fun NavController.navigateUp(times: Int) {
 }
 
 val NavDestination.qualifiedRoute: String?
-    get() = route
-        ?.split("?") // Remove queries parameter
-        ?.firstOrNull()
+    get() =
+        route
+            ?.split("?") // Remove queries parameter
+            ?.firstOrNull()

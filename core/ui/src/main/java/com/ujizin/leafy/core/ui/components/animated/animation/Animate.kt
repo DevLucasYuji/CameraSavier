@@ -11,7 +11,11 @@ import androidx.compose.ui.Modifier
 object Animate {
 
     enum class Direction {
-        None, Start, Top, End, Bottom,
+        None,
+        Start,
+        Top,
+        End,
+        Bottom,
     }
 
     @Composable
@@ -26,24 +30,25 @@ object Animate {
             return
         }
         val visible = rememberSaveable { mutableStateOf(false) }
-        val visibleState = remember(visibleTarget) {
-            MutableTransitionState(visible.value).apply {
-                targetState = visibleTarget
-                visible.value = visibleTarget
+        val visibleState =
+            remember(visibleTarget) {
+                MutableTransitionState(visible.value).apply {
+                    targetState = visibleTarget
+                    visible.value = visibleTarget
+                }
             }
-        }
 
         AnimatedVisibility(
             modifier = modifier,
             visibleState = visibleState,
-            enter = animation.enterTransition() + fadeInEaseInOut(
-                animation.durationMillis,
-                animation.delayMillis,
-            ),
-            exit = animation.exitTransition() + fadeOutEaseInOut(
-                animation.durationMillis,
-                animation.delayMillis,
-            ),
-        ) { content() }
+            enter =
+                animation.enterTransition() +
+                    fadeInEaseInOut(animation.durationMillis, animation.delayMillis),
+            exit =
+                animation.exitTransition() +
+                    fadeOutEaseInOut(animation.durationMillis, animation.delayMillis),
+        ) {
+            content()
+        }
     }
 }

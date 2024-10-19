@@ -26,21 +26,14 @@ internal fun CameraPreviewSection(
 ) {
     BackHandler(onBack = onBackPressed)
     Box(Modifier.fillMaxSize()) {
-        AsyncImage(
-            modifier = Modifier.fillMaxSize(),
-            model = bitmap,
-            contentDescription = null,
-        )
+        AsyncImage(modifier = Modifier.fillMaxSize(), model = bitmap, contentDescription = null)
         AnimatedButtonIcon(
             modifier = Modifier.padding(16.dp),
             icon = Icons.Back,
             onClick = onBackPressed,
         )
         Button(
-            modifier = Modifier
-                .padding(20.dp)
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter),
+            modifier = Modifier.padding(20.dp).fillMaxWidth().align(Alignment.BottomCenter),
             text = stringResource(id = R.string.save),
             onClick = { onSaveClicked(bitmap) },
         )

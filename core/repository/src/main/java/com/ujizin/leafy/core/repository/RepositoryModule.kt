@@ -15,35 +15,21 @@ import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
-/**
- * Dependency injection of repository module
- * */
+/** Dependency injection of repository module */
 @Module
 @InstallIn(SingletonComponent::class)
 internal interface RepositoryModule {
 
-    @Binds
-    fun providePlantRepository(
-        plantRepositoryImpl: PlantRepositoryImpl,
-    ): PlantRepository
+    @Binds fun providePlantRepository(plantRepositoryImpl: PlantRepositoryImpl): PlantRepository
 
-    @Binds
-    fun provideAlarmRepository(
-        alarmRepositoryImpl: AlarmRepositoryImpl,
-    ): AlarmRepository
+    @Binds fun provideAlarmRepository(alarmRepositoryImpl: AlarmRepositoryImpl): AlarmRepository
 
-    @Binds
-    fun provideUserRepository(
-        userRepositoryImpl: UserRepositoryImpl,
-    ): UserRepository
+    @Binds fun provideUserRepository(userRepositoryImpl: UserRepositoryImpl): UserRepository
 
-    @Binds
-    fun provideFileRepository(
-        fileRepositoryImpl: FileRepositoryImpl,
-    ): FileRepository
+    @Binds fun provideFileRepository(fileRepositoryImpl: FileRepositoryImpl): FileRepository
 
     @Binds
     fun provideRingtoneRepository(
-        ringtoneRepositoryImpl: RingtoneRepositoryImpl,
+        ringtoneRepositoryImpl: RingtoneRepositoryImpl
     ): RingtoneRepository
 }

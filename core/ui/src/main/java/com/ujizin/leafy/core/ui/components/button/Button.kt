@@ -2,6 +2,7 @@ package com.ujizin.leafy.core.ui.components.button
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button as Material3Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -14,7 +15,6 @@ import com.ujizin.leafy.core.themes.LeafyTheme
 import com.ujizin.leafy.core.ui.components.animated.AnimatedText
 import com.ujizin.leafy.core.ui.extensions.Content
 import com.ujizin.leafy.core.ui.extensions.OnClick
-import androidx.compose.material3.Button as Material3Button
 
 @Composable
 fun Button(
@@ -35,17 +35,15 @@ fun Button(
         onClick = onClick,
     ) {
         text?.let { text ->
-            val contentColor by rememberUpdatedState(
-                newValue = when {
-                    enabled -> MaterialTheme.colorScheme.onPrimary
-                    else -> MaterialTheme.colorScheme.onSurface
-                },
-            )
-            AnimatedText(
-                color = contentColor,
-                capitalize = capitalize,
-                text = text,
-            )
+            val contentColor by
+                rememberUpdatedState(
+                    newValue =
+                        when {
+                            enabled -> MaterialTheme.colorScheme.onPrimary
+                            else -> MaterialTheme.colorScheme.onSurface
+                        }
+                )
+            AnimatedText(color = contentColor, capitalize = capitalize, text = text)
         } ?: content()
     }
 }
@@ -53,7 +51,5 @@ fun Button(
 @Preview
 @Composable
 fun PreviewButton() {
-    LeafyTheme {
-        Button(text = "Hello world!", onClick = {})
-    }
+    LeafyTheme { Button(text = "Hello world!", onClick = {}) }
 }

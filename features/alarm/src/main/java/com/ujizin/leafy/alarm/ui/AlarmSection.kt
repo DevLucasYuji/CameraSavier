@@ -60,32 +60,29 @@ fun AlarmRoute(
 
     val ringtones by remember {
         derivedStateOf {
-            (uiState as? AlarmUiState.Initialized)?.ringtones.orEmpty()
-                .map { ModalValue(it.title, it) }
+            (uiState as? AlarmUiState.Initialized)?.ringtones.orEmpty().map {
+                ModalValue(it.title, it)
+            }
         }
     }
-    var ringtone by remember(ringtones) {
-        mutableStateOf(ringtones.firstOrNull().orDefault(context))
-    }
+    var ringtone by
+        remember(ringtones) { mutableStateOf(ringtones.firstOrNull().orDefault(context)) }
     var repeatMode: ModalValue<RepeatMode> by remember {
-        mutableStateOf(
-            ModalValue(context.getString(RepeatMode.Daily.display), RepeatMode.Daily),
-        )
+        mutableStateOf(ModalValue(context.getString(RepeatMode.Daily.display), RepeatMode.Daily))
     }
-    val repeatValues = remember(repeatMode) {
-        RepeatMode.getValues(repeatMode.value.asCustom()?.customWeekDays.orEmpty()).map {
-            ModalValue(context.getString(it.display), it)
+    val repeatValues =
+        remember(repeatMode) {
+            RepeatMode.getValues(repeatMode.value.asCustom()?.customWeekDays.orEmpty()).map {
+                ModalValue(context.getString(it.display), it)
+            }
         }
-    }
 
     var hours by remember { mutableIntStateOf(0) }
     var minutes by remember { mutableIntStateOf(0) }
 
     LaunchedEffect(viewModel) { viewModel.setupRingtones() }
 
-    LaunchedEffect(context.alarmManager.hasAlarmPermission) {
-        context.startAlarmPermission()
-    }
+    LaunchedEffect(context.alarmManager.hasAlarmPermission) { context.startAlarmPermission() }
 
     AlarmScreen(
         modifier = Modifier.fillMaxSize(),
@@ -127,9 +124,10 @@ fun AlarmScreen(
     onSaveClicked: OnClick,
 ) {
     val context = LocalContext.current
-    val ringtonePlayer = remember(ringtone) {
-        RingtoneManager.getRingtone(context, ringtone.value.uriContent.toUri())
-    }
+    val ringtonePlayer =
+        remember(ringtone) {
+            RingtoneManager.getRingtone(context, ringtone.value.uriContent.toUri())
+        }
     var ringtoneShowModal by remember { mutableStateOf(false) }
     var repeatShowModal by remember { mutableStateOf(false) }
 
@@ -177,16 +175,13 @@ fun AlarmScreen(
             ) {
                 MultiModalSelector(
                     title = stringResource(id = R.string.custom),
-                    currentValues = repeat.value.asCustom()?.customWeekDays?.mapToModalValue()
-                        .orEmpty(),
+                    currentValues =
+                        repeat.value.asCustom()?.customWeekDays?.mapToModalValue().orEmpty(),
                     values = WeekDay.entries.toList().mapToModalValue(),
                     onValuesSelected = { weekDays ->
                         val repeatMode = RepeatMode.Custom(weekDays.map { it.value })
                         onRepeatChanged(
-                            ModalValue(
-                                context.getString(repeatMode.display),
-                                repeatMode,
-                            ),
+                            ModalValue(context.getString(repeatMode.display), repeatMode)
                         )
                         showCustomSelector = false
                         repeatShowModal = false
@@ -220,22 +215,15 @@ private fun AlarmContent(
     Section(
         modifier = modifier,
         title = stringResource(R.string.alarm_title),
-        trailingIcon = {
-            AnimatedButtonIcon(icon = Icons.Back, onClick = onBackPressed)
-        },
+        trailingIcon = { AnimatedButtonIcon(icon = Icons.Back, onClick = onBackPressed) },
         headerAnimation = Animation.None,
     ) {
         TimerBox(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1F)
-                .paddingScreen(),
+            modifier = Modifier.fillMaxWidth().weight(1F).paddingScreen(),
             onTimeChange = onTimeChanged,
         )
         Selector(
-            modifier = Modifier
-                .fillMaxWidth()
-                .paddingScreen(vertical = 16.dp),
+            modifier = Modifier.fillMaxWidth().paddingScreen(vertical = 16.dp),
             title = stringResource(R.string.ringtone),
             onModalStateChanged = onRingtoneModalStateChanged,
             showModal = ringtoneShowModal,
@@ -243,9 +231,7 @@ private fun AlarmContent(
             content = ringtoneContent,
         )
         Selector(
-            modifier = Modifier
-                .fillMaxWidth()
-                .paddingScreen(vertical = 16.dp),
+            modifier = Modifier.fillMaxWidth().paddingScreen(vertical = 16.dp),
             title = stringResource(R.string.repeat),
             showModal = repeatShowModal,
             onModalStateChanged = onRepeatModalStateChanged,
@@ -253,10 +239,7 @@ private fun AlarmContent(
             content = repeatContent,
         )
         Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp)
-                .paddingScreen(),
+            modifier = Modifier.fillMaxWidth().padding(vertical = 16.dp).paddingScreen(),
             text = stringResource(R.string.save),
             onClick = onSaveClicked,
         )
@@ -270,8 +253,7 @@ fun RingtoneEffect(ringtonePlayer: android.media.Ringtone, isModalVisible: Boole
 
     LaunchedEffect(lifecycleState) {
         if (
-            lifecycleState == Lifecycle.Event.ON_STOP ||
-            lifecycleState == Lifecycle.Event.ON_PAUSE
+            lifecycleState == Lifecycle.Event.ON_STOP || lifecycleState == Lifecycle.Event.ON_PAUSE
         ) {
             ringtonePlayer.stop()
         }
@@ -279,15 +261,13 @@ fun RingtoneEffect(ringtonePlayer: android.media.Ringtone, isModalVisible: Boole
 
     LaunchedEffect(ringtonePlayer) {
         if (isModalVisible && !ringtonePlayer.isPlaying) {
-            ringtonePlayer.audioAttributes = AudioAttributes
-                .Builder()
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .build()
+            ringtonePlayer.audioAttributes =
+                AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .build()
             ringtonePlayer.play()
         }
     }
 
-    LaunchedEffect(isModalVisible) {
-        if (!isModalVisible) ringtonePlayer.stop()
-    }
+    LaunchedEffect(isModalVisible) { if (!isModalVisible) ringtonePlayer.stop() }
 }

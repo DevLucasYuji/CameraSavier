@@ -40,9 +40,7 @@ internal fun PlantDropDown(
         onExpandedChanged = { isExpanded = it },
     ) {
         DropdownMenuItem(
-            text = {
-                Text(stringResource(R.string.delete).capitalize())
-            },
+            text = { Text(stringResource(R.string.delete).capitalize()) },
             onClick = {
                 isExpanded = false
                 showDeleteModal = true
@@ -55,9 +53,7 @@ internal fun PlantDropDown(
         onModalStateChanged = { showDeleteModal = it },
         content = {
             WarningContent(
-                modifier = Modifier
-                    .paddingScreen()
-                    .padding(bottom = 24.dp),
+                modifier = Modifier.paddingScreen().padding(bottom = 24.dp),
                 title = stringResource(R.string.warning_delete_title),
                 text = stringResource(R.string.warning_delete_text),
                 onDismissText = stringResource(R.string.warning_delete_dismiss),

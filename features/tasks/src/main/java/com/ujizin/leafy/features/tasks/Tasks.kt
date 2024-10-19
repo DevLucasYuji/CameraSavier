@@ -70,9 +70,7 @@ private fun TasksContent(
     onPlantClick: (Long) -> Unit,
     onDrawerClick: OnClick,
 ) {
-    LazyColumn(
-        modifier = Modifier.fillMaxSize(),
-    ) {
+    LazyColumn(modifier = Modifier.fillMaxSize()) {
         item {
             Section(
                 modifier = Modifier.padding(bottom = 16.dp),
@@ -85,28 +83,26 @@ private fun TasksContent(
 
         when (uiState) {
             TasksUiState.Initial -> Unit
-            TasksUiState.Empty -> item {
-                EmptySection(
-                    description = stringResource(id = R.string.task_empty_description),
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = onTakePictureClick,
-                )
-            }
-
-            is TasksUiState.Success -> uiState.tasks.forEach { (weekDay, tasks) ->
-                stickyHeader { HeaderWeekDay(weekDay) }
-                items(tasks) { task ->
-                    TaskItems(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .paddingScreen(vertical = 16.dp),
-                        task = task,
-                        onClick = {
-                            onPlantClick(task.plant.id)
-                        },
+            TasksUiState.Empty ->
+                item {
+                    EmptySection(
+                        description = stringResource(id = R.string.task_empty_description),
+                        modifier = Modifier.fillMaxWidth(),
+                        onClick = onTakePictureClick,
                     )
                 }
-            }
+
+            is TasksUiState.Success ->
+                uiState.tasks.forEach { (weekDay, tasks) ->
+                    stickyHeader { HeaderWeekDay(weekDay) }
+                    items(tasks) { task ->
+                        TaskItems(
+                            modifier = Modifier.fillMaxWidth().paddingScreen(vertical = 16.dp),
+                            task = task,
+                            onClick = { onPlantClick(task.plant.id) },
+                        )
+                    }
+                }
         }
 
         item { Spacer(Modifier.padding(64.dp)) }
@@ -114,24 +110,15 @@ private fun TasksContent(
 }
 
 @Composable
-fun TaskItems(
-    modifier: Modifier = Modifier,
-    task: Task,
-    onClick: OnClick,
-) {
+fun TaskItems(modifier: Modifier = Modifier, task: Task, onClick: OnClick) {
     Card(
         modifier = modifier,
         shape = MaterialTheme.shapes.medium,
-        elevation = CardDefaults.cardElevation(
-            pressedElevation = 16.dp,
-            defaultElevation = 8.dp,
-        ),
+        elevation = CardDefaults.cardElevation(pressedElevation = 16.dp, defaultElevation = 8.dp),
         onClick = onClick,
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+            modifier = Modifier.fillMaxWidth().padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
@@ -141,19 +128,11 @@ fun TaskItems(
 }
 
 @Composable
-private fun PlantItem(
-    modifier: Modifier = Modifier,
-    task: Task,
-) {
+private fun PlantItem(modifier: Modifier = Modifier, task: Task) {
     val context = LocalContext.current
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
+    Row(modifier = modifier, verticalAlignment = Alignment.CenterVertically) {
         Image(
-            modifier = Modifier
-                .size(80.dp)
-                .clip(MaterialTheme.shapes.small),
+            modifier = Modifier.size(80.dp).clip(MaterialTheme.shapes.small),
             model = task.plant.filePath,
             contentDescription = task.plant.title,
         )
@@ -163,10 +142,7 @@ private fun PlantItem(
                 style = MaterialTheme.typography.titleMedium,
                 maxLines = 1,
             )
-            Text(
-                text = task.alarm.weekDays.getDisplayName(context).capitalize(),
-                maxLines = 1,
-            )
+            Text(text = task.alarm.weekDays.getDisplayName(context).capitalize(), maxLines = 1)
             Text(
                 text = task.alarm.dateFormatted,
                 style = MaterialTheme.typography.titleSmall,
@@ -181,16 +157,13 @@ private fun PlantItem(
 @Composable
 fun HeaderWeekDay(weekDay: WeekDay) {
     Text(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.background)
-            .paddingScreen(vertical = 8.dp),
+        modifier =
+            Modifier.fillMaxWidth()
+                .background(MaterialTheme.colorScheme.background)
+                .paddingScreen(vertical = 8.dp),
         text = stringResource(id = weekDay.displayNameRes).capitalize(),
         style = MaterialTheme.typography.titleMedium,
     )
 }
 
-@ThemePreviews
-@Composable
-private fun TasksPreview() {
-}
+@ThemePreviews @Composable private fun TasksPreview() {}

@@ -26,14 +26,8 @@ fun WarningContent(
     onConfirm: () -> Unit,
 ) {
     Column(modifier) {
-        Text(
-            text = title.capitalize(),
-            style = MaterialTheme.typography.titleMedium,
-        )
-        Text(
-            modifier = Modifier.padding(top = 16.dp),
-            text = text.capitalize(),
-        )
+        Text(text = title.capitalize(), style = MaterialTheme.typography.titleMedium)
+        Text(modifier = Modifier.padding(top = 16.dp), text = text.capitalize())
         Row(
             modifier = Modifier.padding(top = 24.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),

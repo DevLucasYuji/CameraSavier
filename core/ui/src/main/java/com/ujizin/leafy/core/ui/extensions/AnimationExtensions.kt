@@ -6,14 +6,10 @@ import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.runtime.Stable
 
-@Stable
-fun fullSlideInHorizontally() = slideInHorizontally { it }
+@Stable fun fullSlideInHorizontally() = slideInHorizontally { it }
 
-@Stable
-fun fullSlideOutHorizontally() = slideOutHorizontally { it }
+@Stable fun fullSlideOutHorizontally() = slideOutHorizontally { it }
 
-@Stable
-fun fullSlideInVertically() = slideInVertically { it }
+@Stable fun fullSlideInVertically() = slideInVertically { it }
 
-@Stable
-fun fullSlideOutVertically() = slideOutVertically { -it }
+@Stable fun fullSlideOutVertically() = slideOutVertically { -it }

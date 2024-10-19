@@ -7,13 +7,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.flow.onStart
 
-fun <T> Flow<T>.asResult(): Flow<Result<T>> = map<T, Result<T>> {
-    Result.Success(it)
-}.onStart {
-    emit(Result.Loading)
-}.catch {
-    emit(Result.Error(it))
-}
+fun <T> Flow<T>.asResult(): Flow<Result<T>> =
+    map<T, Result<T>> { Result.Success(it) }
+        .onStart { emit(Result.Loading) }
+        .catch { emit(Result.Error(it)) }
 
 fun <T : Any> Flow<Result<T?>>.mapResult(): Flow<T> = mapNotNull { result ->
     when (result) {
